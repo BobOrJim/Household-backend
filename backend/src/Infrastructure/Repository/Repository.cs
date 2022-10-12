@@ -9,10 +9,10 @@ namespace Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly PupyDbContext _context;
+        private readonly HouseholdDbContext _context;
         private DbSet<T> _entities;
 
-        public Repository(PupyDbContext context)
+        public Repository(HouseholdDbContext context)
         {
             _context = context;
             _entities = context.Set<T>();

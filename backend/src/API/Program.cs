@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
 ConfigurationManager configuration = builder.Configuration;
-builder.Services.AddDbContext<PupyDbContext>();
+builder.Services.AddDbContext<HouseholdDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -102,9 +102,9 @@ app.UseEndpoints(endpoints =>
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<PupyDbContext>();
-    await SeedPupyDbContext.SeedAsync(context);
+    //var services = scope.ServiceProvider;
+    //var context = services.GetRequiredService<PupyDbContext>();
+    //await SeedPupyDbContext.SeedAsync(context);
 }
 
 
