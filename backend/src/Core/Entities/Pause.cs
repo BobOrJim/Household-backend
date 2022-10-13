@@ -11,7 +11,7 @@ namespace Core.Entities
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Profile Profile { get; set; } = new Profile();
+        public Profile Profile { get; set; }
         public Guid ProfileId { get; set; }
 
     }

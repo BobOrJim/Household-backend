@@ -102,9 +102,11 @@ app.UseEndpoints(endpoints =>
 
 using (var scope = app.Services.CreateScope())
 {
-    //var services = scope.ServiceProvider;
-    //var context = services.GetRequiredService<PupyDbContext>();
-    //await SeedPupyDbContext.SeedAsync(context);
+    
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<HouseholdDbContext>();
+    await SeedHouseholdDbContext.SeedAsync(context);
+    
 }
 
 

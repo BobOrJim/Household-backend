@@ -169,7 +169,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Chore", b =>
                 {
                     b.HasOne("Core.Entities.Household", "Household")
-                        .WithMany()
+                        .WithMany("chores")
                         .HasForeignKey("HouseholdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -180,11 +180,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.ChoreCompleted", b =>
                 {
                     b.HasOne("Core.Entities.Chore", "Chore")
-                        .WithMany()
+                        .WithMany("choresCompleted")
                         .HasForeignKey("ChoreId");
 
                     b.HasOne("Core.Entities.Profile", "Profile")
-                        .WithMany()
+                        .WithMany("choresCompleted")
                         .HasForeignKey("ProfileId");
 
                     b.Navigation("Chore");
@@ -195,7 +195,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Pause", b =>
                 {
                     b.HasOne("Core.Entities.Profile", "Profile")
-                        .WithMany()
+                        .WithMany("Pauses")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -214,10 +214,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("Household");
                 });
 
+            modelBuilder.Entity("Core.Entities.Chore", b =>
+                {
+                    b.Navigation("choresCompleted");
+                });
+
             modelBuilder.Entity("Core.Entities.Household", b =>
                 {
                     b.Navigation("Profile")
                         .IsRequired();
+
+                    b.Navigation("chores");
+                });
+
+            modelBuilder.Entity("Core.Entities.Profile", b =>
+                {
+                    b.Navigation("Pauses");
+
+                    b.Navigation("choresCompleted");
                 });
 #pragma warning restore 612, 618
         }
