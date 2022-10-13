@@ -26,8 +26,9 @@ public class HouseholdDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        //optionsBuilder.UseSqlServer(azureConnectionString);
-        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=HouseholdDb;Trusted_Connection=True;");
+        //optionsBuilder.UseSqlServer(azureConnectionString); //When using Azure Db version
+        //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=HouseholdDb;Trusted_Connection=True;"); //When using local Db version
+        optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString()); //When using inMemory
     }
 
 
