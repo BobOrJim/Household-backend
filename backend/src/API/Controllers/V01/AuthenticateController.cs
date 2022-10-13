@@ -85,11 +85,6 @@ namespace API.Controllers.V01
                             puppyUser.Alias = user.UserName;
                             await _iUserService.UpdateAsync(puppyUser);
                         }
-                        if (puppyUser.ContactEmail == "")
-                        {
-                            puppyUser.ContactEmail = user.Email;
-                            await _iUserService.UpdateAsync(puppyUser);
-                        }
 
                     }
                 }
@@ -119,7 +114,6 @@ namespace API.Controllers.V01
 
             IdentityUser user = new()
             {
-                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
@@ -161,7 +155,6 @@ namespace API.Controllers.V01
 
             IdentityUser user = new()
             {
-                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };

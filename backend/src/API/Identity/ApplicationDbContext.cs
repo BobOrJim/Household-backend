@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Identity
 {
     //Open Package manager console
-    //add-migration V01
-    //update-database
+    //add-migration "identity-V01" -context ApplicationDbContext
+    //update-database -context ApplicationDbContext
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
