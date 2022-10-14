@@ -22,6 +22,7 @@ builder.Services.AddDbContext<HouseholdDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IUserService, UserService>();
+//Remove this comment. Its here to trigger new Build
 
 
 // For Entity Framework for identity
