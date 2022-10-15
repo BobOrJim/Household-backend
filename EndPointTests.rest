@@ -5,7 +5,7 @@ POST https://household-backend.azurewebsites.net/api/V01/Authenticate/login
 content-type: application/json
 
 {
-  "username": "janbannan",
+  "username": "tuco54",
   "password": "password_A1"
 }
 ###
@@ -16,8 +16,51 @@ content-type: application/json
   "username": "tuco54",
   "password": "password_A1"
 }
-###
 
+###
+// GetByProfileId
+GET https://localhost:7018/api/v01/profile/GetByProfileId/B0000000-0000-0000-0000-000000000001
+###
+// GetByHouseholdId
+GET https://localhost:7018/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
+###
+// GetByUserId
+GET https://localhost:7018/api/v01/profile/GetByUserId/90000000-0000-0000-0000-000000000001
+###
+// CreateProfile
+// Obs skapa egen token
+POST https://localhost:7018/api/v01/profile/CreateProfile/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hbm9ueW1vdXMiOiI2ZmZhZTI4Ni1iNjRhLTRlNWEtYWFiZC04OTAzOTRmOWE5M2MiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidHVjbzU0IiwianRpIjoiZDcyNTVjNzYtMmM3Yy00NzEzLWI2MTMtZGYxNjFkYWM1OWZjIiwiZXhwIjoxNjY3NjU0NzA0LCJpc3MiOiJUcnVlIiwiYXVkIjoiVHJ1ZSJ9.a6uDTPZtQZlKLwKQHMQDune9wX11FkbqIijxTaD_5VM
+
+{
+  "alias": "Robotnik",
+  "householdId": "C0000000-0000-0000-0000-000000000001",
+  "isAdmin": false
+}
+
+
+// UpdateProfile
+// Saker som går att uppdatera är:
+# {
+#   "Alias": "asd",
+#   "IsAdmin": false,
+#   "Avatar": "???",
+#   "Color": "#bada55",
+#   "PendingRequest" : false
+# }
+// Men allt är optional, JS style
+###
+PATCH https://localhost:7018/api/v01/profile/EditProfile/b0000000-0000-0000-0000-000000000001
+Content-Type: application/json
+
+{
+  "Alias": "JanBananHemma"
+}
+
+###
+// DeleteProfile
+DELETE https://localhost:7018/api/v01/profile/DeleteProfile/b0000000-0000-0000-0000-000000000001
 
 
 
