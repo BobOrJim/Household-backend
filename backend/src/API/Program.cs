@@ -27,6 +27,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // For Entity Framework for identity
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
+// builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("fortKnox"));
 
 // For Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -103,11 +104,11 @@ app.UseEndpoints(endpoints =>
 
 using (var scope = app.Services.CreateScope())
 {
-    
+
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<HouseholdDbContext>();
     await SeedHouseholdDbContext.SeedAsync(context);
-    
+
 }
 
 

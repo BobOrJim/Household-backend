@@ -19,18 +19,15 @@ namespace API.Controllers.V01
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        private readonly IUserService _iUserService;
 
         public AuthenticateController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration,
-            IUserService iUserService)
+            IConfiguration configuration)
         {
             _userManager = userManager;  //För authUser
             _roleManager = roleManager;
             _configuration = configuration;
-            _iUserService = iUserService;  //För user
         }
 
         [HttpPost] //Return Token
@@ -40,19 +37,6 @@ namespace API.Controllers.V01
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                User? userInPuppyDb = CheckIfUserExistsInPuppyDb_ThatMatchAuthUser(user);
-                string userInPuppyDbId = "";
-                if (userInPuppyDb == null)
-                {
-                    await CreateUserInPuppyDb_ThatMatchAuthUser(user);
-                    userInPuppyDb = CheckIfUserExistsInPuppyDb_ThatMatchAuthUser(user);
-                    if (userInPuppyDb == null)
-                    {
-                        throw new Exception("User does not exist in PuppyDb, and backend failed to create one");
-                    }
-                }
-                
-                userInPuppyDbId = userInPuppyDb.Id.ToString();
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
                 {
@@ -68,37 +52,11 @@ namespace API.Controllers.V01
 
                 var token = GetToken(authClaims);
 
-                //log in user in puppyDb
-                //to Trigger build due to CICD trouble.
-                User? puppyUser = await _iUserService.GetByIdAsync(Guid.Parse(userInPuppyDbId));
-                try
-                {
-                    if (puppyUser != null)
-                    {
-                        if (puppyUser.IsLoggedIn == false)
-                        {
-                            puppyUser.IsLoggedIn = true;
-                            await _iUserService.UpdateAsync(puppyUser);
-                        }
-                        if (puppyUser.Alias == "")
-                        {
-                            puppyUser.Alias = user.UserName;
-                            await _iUserService.UpdateAsync(puppyUser);
-                        }
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    throw new Exception("Possible EF error due to update of identical object. Exception message= " +e);
-                }
-
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
                     authUserId = user.Id,
-                    userId = userInPuppyDbId
                 });
             }
             return Unauthorized();
@@ -193,27 +151,6 @@ namespace API.Controllers.V01
             return token;
         }
 
-        private User? CheckIfUserExistsInPuppyDb_ThatMatchAuthUser(IdentityUser user)
-        {
-            {
-                User? userFromDb = _iUserService.GetAllAsync(x => x.AuthId == Guid.Parse(user.Id)).Result.FirstOrDefault();
-                return userFromDb;
-            }
-        }
-
-        private async Task CreateUserInPuppyDb_ThatMatchAuthUser(IdentityUser user)
-        {
-            User newUser = new()
-            {
-                Alias = "",
-                PhoneNr = "",
-                IsLoggedIn = false,
-                ProfilePictureUrl = "",
-                AuthId = Guid.Parse(user.Id),
-                Adverts = new List<Advert>(),
-            };
-            await _iUserService.InsertAsync(newUser);
-        }
     }
 }
 
