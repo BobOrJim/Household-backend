@@ -3,11 +3,11 @@ using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-
+using System.Text.Json;
 
 namespace API.Controllers.V01
 {
-    [Authorize]
+    // [Authorize]
     [Route("api/V01/[controller]")]
     [ApiController]
     public class ProfileController : ControllerBase
@@ -59,6 +59,7 @@ namespace API.Controllers.V01
             return Ok(profiles);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("CreateProfile")]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateDto profileDto)
@@ -103,6 +104,7 @@ namespace API.Controllers.V01
 
             var updatedProfile = await _profileRepository.UpdateAsync(new Profile()
             {
+                Id = existingProfile.Id,
                 Alias = profileDto.Alias ?? existingProfile.Alias,
                 IsAdmin = profileDto.IsAdmin ?? existingProfile.IsAdmin,
                 Avatar = profileDto.Avatar ?? existingProfile.Avatar,
@@ -142,4 +144,5 @@ namespace API.Controllers.V01
         }
 
     }
+
 }
