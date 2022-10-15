@@ -11,13 +11,12 @@ namespace Core.Entities
 
         public string Alias { get; set; } = "";
         public string Avatar { get; set; } = "";
-        public string AvatarColor { get; set; } = "";
+        public string Color { get; set; } = "";
         public bool IsAdmin { get; set; } = false;
         public bool PendingRequest { get; set; } = false;
         public Guid AuthUserId { get; set; }
         public Household Household { get; set; }
         public Guid HouseholdId { get; set; }
-        public List<Pause> Pauses { get; set; }
-        public List<ChoreCompleted> choresCompleted { get; set; }
+
     }
-}
+}     
