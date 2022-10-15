@@ -5,7 +5,7 @@ namespace Core.Interfaces.Services
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        Task<bool> InsertAsync(T entity);
+        Task<T> InsertAsync(T entity);
         Task<T?> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetListAsync(Expression<Func<T, bool>> predicate);
         Task<bool> DeleteAsync(T entity);

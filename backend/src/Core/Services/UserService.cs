@@ -17,7 +17,7 @@ namespace Core.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> InsertAsync(User user) => await _userRepository.InsertAsync(user);
+        public async Task<User> InsertAsync(User user) => await _userRepository.InsertAsync(user);
         public async Task<User?> GetByIdAsync(Guid id) => await _userRepository.GetByIdAsync(id);
         public async Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>> predicate) => await _userRepository.GetListAsync(predicate);
         public async Task<bool> DeleteAsync(User user) => await _userRepository.DeleteAsync(user);

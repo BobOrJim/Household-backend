@@ -17,7 +17,7 @@ namespace Core.Services
             _advertRepository = advertRepository;
         }
 
-        public async Task<bool> InsertAsync(Advert advert) => await _advertRepository.InsertAsync(advert);
+        public async Task<Advert> InsertAsync(Advert advert) => await _advertRepository.InsertAsync(advert);
         public async Task<Advert?> GetByIdAsync(Guid id) => await _advertRepository.GetByIdAsync(id);
         public async Task<IEnumerable<Advert>> GetAllAsync(Expression<Func<Advert, bool>> predicate) => await _advertRepository.GetListAsync(predicate);
         public async Task<bool> DeleteAsync(Advert advert) => await _advertRepository.DeleteAsync(advert);

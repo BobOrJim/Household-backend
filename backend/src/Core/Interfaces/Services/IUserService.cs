@@ -5,7 +5,7 @@ namespace Core.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<bool> InsertAsync(User user);
+        Task<User> InsertAsync(User user);
         Task<bool> DeleteAsync(User user);
         Task<IEnumerable<User>> GetAllAsync(Expression<Func<User, bool>> predicate);
         Task<User?> GetByIdAsync(Guid id);

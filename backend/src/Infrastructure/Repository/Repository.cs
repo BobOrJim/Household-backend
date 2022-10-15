@@ -18,10 +18,11 @@ namespace Infrastructure.Repository
             _entities = context.Set<T>();
         }
 
-        public async Task<bool> InsertAsync(T entity)
+        public async Task<T> InsertAsync(T entity)
         {
             _entities.Add(entity);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<T?> GetByIdAsync(Guid id) => await _entities.FindAsync(id);
