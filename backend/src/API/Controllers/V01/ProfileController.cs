@@ -46,6 +46,18 @@ namespace API.Controllers.V01
             return Ok(profiles);
         }
 
+        [HttpGet]
+        [Route("GetByProfileId/{id:Guid}")]
+        public async Task<IActionResult> GetByProfileId(Guid id)
+        {
+            var profiles = await _profileRepository.GetListAsync(p => p.Id == id);
+            if (profiles == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(profiles);
+        }
 
         [HttpPost]
         [Route("CreateProfile")]
@@ -129,15 +141,5 @@ namespace API.Controllers.V01
             return NoContent();
         }
 
-        private async Task<IActionResult> GetByProfileId(Guid id)
-        {
-            var profiles = await _profileRepository.GetListAsync(p => p.Id == id);
-            if (profiles == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(profiles);
-        }
     }
 }
