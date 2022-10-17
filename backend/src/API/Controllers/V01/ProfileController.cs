@@ -21,10 +21,10 @@ namespace API.Controllers.V01
 
         [HttpGet]
         [Route("GetByUserId/{id:Guid}")]
-        public async Task<IActionResult> GetByUserId(Guid id)
+        public async Task<IActionResult> GetByAuthUserId(Guid id)
         {
             var profiles = await _profileRepository.GetListAsync(p => p.AuthUserId == id);
-            Console.WriteLine(profiles);
+
             if (profiles == null)
             {
                 return NotFound();

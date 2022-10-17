@@ -25,7 +25,7 @@ GET https://localhost:7018/api/v01/profile/GetByProfileId/B0000000-0000-0000-000
 GET https://localhost:7018/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
 ###
 // GetByUserId
-GET https://localhost:7018/api/v01/profile/GetByUserId/90000000-0000-0000-0000-000000000001
+GET https://localhost:7018/api/v01/profile/GetByAuthUserId/90000000-0000-0000-0000-000000000001
 ###
 // CreateProfile
 // Obs skapa egen token
