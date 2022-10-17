@@ -92,5 +92,25 @@ namespace API.Controllers.V01
                 return StatusCode(400, e.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("DeleteChore/{id:Guid}")]
+        public async Task<IActionResult> DeleteChore(Guid id)
+        {
+            var choreToDelete = await _choreRepository.GetByIdAsync(id);
+            if (choreToDelete == null)
+            {
+                return BadRequest("Chore doesn't exist");
+            }
+
+            var result = await _choreRepository.DeleteAsync(choreToDelete);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
     }
 }
