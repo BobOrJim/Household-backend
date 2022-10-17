@@ -74,8 +74,8 @@ Content-Type: application/json
 {
   "startDate": "2022-10-17T10:52:41.517Z",
   "endDate": "2022-10-17T10:52:41.517Z",
-  "profileId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "profileIdQol": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "householdId": "C0000000-0000-0000-0000-000000000001"
 }
 
 ###
@@ -86,8 +86,8 @@ Content-Type: application/json
 {
   "startDate": "2022-10-17T10:57:49.015Z",
   "endDate": "2022-10-17T10:57:49.015Z",
-  "profileId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  "profileIdQol": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "householdId": "C0000000-0000-0000-0000-000000000001"
 }
 
 

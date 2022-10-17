@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Core.Entities;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace API.Controllers.V01
                 {
                     StartDate = pauseDto.StartDate,
                     EndDate = pauseDto.EndDate,
-                    ProfileId = pauseDto.ProfileId,
+                    ProfileIdQol = pauseDto.ProfileIdQol,
                     HouseholdId = pauseDto.HouseholdId,
                 };
 
@@ -50,7 +51,7 @@ namespace API.Controllers.V01
             }
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, e.Message + "\n" + e.InnerException);
             }
         }
 
@@ -68,7 +69,7 @@ namespace API.Controllers.V01
 
                 pause.StartDate = pauseDto.StartDate;
                 pause.EndDate = pauseDto.EndDate;
-                pause.ProfileId = pauseDto.ProfileId;
+                pause.ProfileIdQol = pauseDto.ProfileIdQol;
                 pause.HouseholdId = pauseDto.HouseholdId;
 
                 await _pauseRepository.UpdateAsync(pause);
@@ -76,7 +77,7 @@ namespace API.Controllers.V01
             }
             catch (Exception e)
             {
-                return StatusCode(400, e.Message);
+                return StatusCode(500, e.Message + "\n" + e.InnerException);
             }
         }
     }

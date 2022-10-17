@@ -13,7 +13,7 @@ namespace Core.Entities
 
         public DateTime EndDate { get; set; } = new DateTime();
 
-        public Guid ProfileId { get; set; }
+        public Guid ProfileIdQol { get; set; }
 
         public Guid HouseholdId { get; set; }
     }

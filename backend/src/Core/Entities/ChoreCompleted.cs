@@ -10,9 +10,11 @@ namespace Core.Entities
     public class ChoreCompleted : BaseEntity
     {
         public DateTime CompletedAt { get; set; }
-        public Profile? Profile { get; set; }
-        public Guid? ProfileId { get; set; }
+        // public Profile? Profile { get; set; }
+        public Guid? ProfileIdQol { get; set; }
         public Chore? Chore { get; set; }
         public Guid? ChoreId { get; set; }
+        public Household? Household { get; set; }
+        public Guid? HouseholdId { get; set; }
     }
 }

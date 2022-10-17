@@ -10,10 +10,10 @@ namespace Core.Entities
     {
         public string Name { get; set; } = "";
         public string Code { get; set; } = "";
-        public Profile Profile { get; set; }
 
-
-        public List<Chore> chores { get; set; }
-
+        public List<Profile> Profiles { get; set; }
+        public List<Chore> Chores { get; set; }
+        public List<ChoreCompleted> ChoresCompleted { get; set; }
+        public List<Pause> Pauses { get; set; }
     }
 }

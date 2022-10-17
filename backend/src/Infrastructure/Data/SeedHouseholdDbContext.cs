@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -41,28 +42,28 @@ namespace Infrastructure.Data
             Guid ChoreCompleted2 = new Guid("E0000000-0000-0000-0000-000000000002");
             Guid ChoreCompleted3 = new Guid("E0000000-0000-0000-0000-000000000003");
 
-            
+
             if (!await context.Household.AnyAsync())
             {
-                //await context.Household.AddRangeAsync(GetPreconfiguredHouseholds());
-                Household SunkigaStudentHålet = new Household() { Id= Household1Guid, Name = "SunkigaStudentHålet", Code = "666" };
-                Household OrdnignORedaHuset = new Household() { Id = Household2Guid, Name = "OrdnignORedaHuset", Code = "1234" };
-                await context.Household.AddAsync(SunkigaStudentHålet);
-                await context.Household.AddAsync(OrdnignORedaHuset);
-
                 Profile JanBannanHemma = new Profile() { Id = Profile1Guid, Alias = "JanBannanHemma", Avatar = "", Color = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household1Guid };
                 Profile JanBannanHosMorsan = new Profile() { Id = Profile2Guid, Alias = "JanBannanHosMorsan", Avatar = "", Color = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household2Guid };
                 await context.Profile.AddAsync(JanBannanHemma);
                 await context.Profile.AddAsync(JanBannanHosMorsan);
 
-                Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileId = Profile1Guid };
-                Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileId = Profile1Guid };
-                Pause pause3 = new Pause() { Id = Pause3Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileId = Profile1Guid };
+                Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
+                Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
+                Pause pause3 = new Pause() { Id = Pause3Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
                 List<Pause> pauses = new List<Pause>();
                 pauses.Add(pause1);
                 pauses.Add(pause2);
                 pauses.Add(pause3);
                 await context.Pause.AddRangeAsync(pauses);
+
+                //await context.Household.AddRangeAsync(GetPreconfiguredHouseholds());
+                Household SunkigaStudentHålet = new Household() { Id = Household1Guid, Name = "SunkigaStudentHålet", Code = "666" };
+                Household OrdnignORedaHuset = new Household() { Id = Household2Guid, Name = "OrdnignORedaHuset", Code = "1234" };
+                await context.Household.AddAsync(SunkigaStudentHålet);
+                await context.Household.AddAsync(OrdnignORedaHuset);
 
                 Chore chore1 = new Chore() { Id = Chore1Guid, Name = "Sanera", Points = 10, Description = "Ta bort Mögel", PictureUrl = "", AudioUrl = "", Frequency = 0, IsArchived = false, HouseholdId = Household1Guid };
                 Chore chore2 = new Chore() { Id = Chore2Guid, Name = "Torka", Points = 4, Description = "Torka Bokhyllan", PictureUrl = "", AudioUrl = "", Frequency = 7, IsArchived = false, HouseholdId = Household2Guid };
@@ -75,9 +76,9 @@ namespace Infrastructure.Data
                 chores.Add(chore4);
                 await context.Chore.AddRangeAsync(chores);
 
-                ChoreCompleted choreCompleted1 = new ChoreCompleted() { Id = ChoreCompleted1, CompletedAt = new DateTime(2021, 1, 1), ProfileId = Profile1Guid, ChoreId = Chore4Guid };
-                ChoreCompleted choreCompleted2 = new ChoreCompleted() { Id = ChoreCompleted2, CompletedAt = new DateTime(2021, 1, 14), ProfileId = Profile1Guid, ChoreId = Chore4Guid };
-                ChoreCompleted choreCompleted3 = new ChoreCompleted() { Id = ChoreCompleted3, CompletedAt = new DateTime(2021, 1, 15), ProfileId = Profile1Guid, ChoreId = Chore4Guid };
+                ChoreCompleted choreCompleted1 = new ChoreCompleted() { Id = ChoreCompleted1, CompletedAt = new DateTime(2021, 1, 1), ProfileIdQol = Profile1Guid, ChoreId = Chore4Guid, HouseholdId = Household1Guid };
+                ChoreCompleted choreCompleted2 = new ChoreCompleted() { Id = ChoreCompleted2, CompletedAt = new DateTime(2021, 1, 14), ProfileIdQol = Profile1Guid, ChoreId = Chore4Guid, HouseholdId = Household1Guid };
+                ChoreCompleted choreCompleted3 = new ChoreCompleted() { Id = ChoreCompleted3, CompletedAt = new DateTime(2021, 1, 15), ProfileIdQol = Profile1Guid, ChoreId = Chore4Guid, HouseholdId = Household1Guid };
                 List<ChoreCompleted> choresCompleted = new List<ChoreCompleted>();
                 choresCompleted.Add(choreCompleted1);
                 choresCompleted.Add(choreCompleted2);
@@ -88,11 +89,12 @@ namespace Infrastructure.Data
 
 
 
-
+                Debug.WriteLine("Attempting seed save...");
                 await context.SaveChangesAsync();
+                Debug.WriteLine("Succeeded(?)");
             }
         }
-        
+
         static IEnumerable<Household> GetPreconfiguredHouseholds()
         {
             return new List<Household>() {
