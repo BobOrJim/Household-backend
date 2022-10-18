@@ -111,7 +111,6 @@ namespace API.Controllers.V01
                 Color = profileDto.Color ?? existingProfile.Color,
                 PendingRequest = profileDto.PendingRequest ?? existingProfile.PendingRequest,
                 AuthUserId = existingProfile.AuthUserId,
-                Household = existingProfile.Household,
                 HouseholdId = existingProfile.HouseholdId
             });
 

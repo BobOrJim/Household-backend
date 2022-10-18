@@ -15,8 +15,7 @@ namespace Core.Entities
         public bool IsAdmin { get; set; } = false;
         public bool PendingRequest { get; set; } = false;
         public Guid AuthUserId { get; set; }
-        public Household Household { get; set; }
         public Guid HouseholdId { get; set; }
 
     }
-}     
+}

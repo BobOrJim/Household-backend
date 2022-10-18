@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Core.Entities;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,28 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GethouseholdByUserId/{id:Guid}", Name = "GetHouseholdObjectByUserIdAsync")]
-        public async Task<IActionResult> GetHouseholdObjectByUserIdAsync(Guid userId)
+        [Route("GetHouseholdByProfileId/{profileId:Guid}", Name = "GetHouseholdObjectByProfileIdAsync")]
+        public async Task<IActionResult> GetHouseholdObjectByProfileIdAsync(Guid profileId)
         {
-            Profile? profileObject = await _profileRepository.GetByIdAsync(userId);
-            if (profileObject == null) return NotFound();
-            Household? householdObject = await _householdRepository.GetByIdAsync(profileObject.HouseholdId);
-            if (householdObject == null) return NotFound();
+            try
+            {
+                Profile? profileObject = await _profileRepository.GetByIdAsync(profileId);
+                if (profileObject == null) return NotFound("Provided profileID not found");
+                Household? householdObject = await _householdRepository.GetByIdAsync(profileObject.HouseholdId);
+                if (householdObject == null) return NotFound("Profile found, but no household by ID is tied to it(this should be impossible :o)");
 
-            return Ok(householdObject);
+                HouseholdDto result = new HouseholdDto
+                {
+                    Code = householdObject.Code,
+                    Name = householdObject.Name,
+                };
+
+                return Ok(householdObject);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
@@ -46,7 +60,7 @@ namespace API.Controllers.V01
                 };
 
                 await _householdRepository.InsertAsync(household);
-                return Ok();
+                return Ok(household);
             }
             catch (Exception e)
             {
@@ -61,6 +75,7 @@ namespace API.Controllers.V01
             try
             {
                 Household? household = await _householdRepository.GetByIdAsync(id);
+                if (household == null) return NotFound("ID could not be found");
                 await _householdRepository.DeleteAsync(household);
                 return Ok();
             }

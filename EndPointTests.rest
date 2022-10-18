@@ -90,6 +90,24 @@ Content-Type: application/json
   "householdId": "C0000000-0000-0000-0000-000000000001"
 }
 
+###
+// Uses one of the seeded profiles to find its corresponding household.
+GET https://localhost:7018/api/V01/Household/GetHouseholdByProfileId/b0000000-0000-0000-0000-000000000001
+
+###
+POST https://localhost:7018/api/V01/Household/AddHousehold
+Content-Type: application/json
+
+{
+  "name": "HemmetPåBergetDärBorta",
+  "code": "991105"
+}
+
+###
+// Try this delete, and the household-get-endpoint will fail.
+DELETE https://localhost:7018/api/V01/Household/DeleteHouseholdById/c0000000-0000-0000-0000-000000000001
+
+
 
 
 
