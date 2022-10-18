@@ -18,7 +18,6 @@ namespace Core.Entities
         public bool IsArchived { get; set; } = false;
         public Household Household { get; set; }
         public Guid HouseholdId { get; set; }
-        public List<ChoreCompleted> choresCompleted { get; set; }
     }
 }
 

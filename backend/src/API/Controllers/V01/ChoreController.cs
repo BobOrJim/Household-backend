@@ -48,7 +48,6 @@ namespace API.Controllers.V01
                     IsArchived = choreDto.IsArchived,
                     Household = choreDto.Household,
                     HouseholdId = choreDto.HouseholdId,
-                    choresCompleted = choreDto.choresCompleted,
                 };
 
                 await _choreRepository.InsertAsync(result);
@@ -81,7 +80,6 @@ namespace API.Controllers.V01
                 chore.IsArchived = choreDto.IsArchived;
                 chore.Household = choreDto.Household;
                 chore.HouseholdId = choreDto.HouseholdId;
-                chore.choresCompleted = choreDto.choresCompleted;
 
 
                 await _choreRepository.UpdateAsync(chore);
