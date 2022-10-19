@@ -76,7 +76,6 @@ namespace API.Controllers.V01
             {
                 Alias = profileDto.Alias,
                 Avatar = "pending",
-                Color = "#262626",
                 IsAdmin = profileDto.IsAdmin,
                 PendingRequest = profileDto.IsAdmin ? false : true,
                 HouseholdId = profileDto.HouseholdId ?? new Guid(),
@@ -108,7 +107,6 @@ namespace API.Controllers.V01
                 Alias = profileDto.Alias ?? existingProfile.Alias,
                 IsAdmin = profileDto.IsAdmin ?? existingProfile.IsAdmin,
                 Avatar = profileDto.Avatar ?? existingProfile.Avatar,
-                Color = profileDto.Color ?? existingProfile.Color,
                 PendingRequest = profileDto.PendingRequest ?? existingProfile.PendingRequest,
                 AuthUserId = existingProfile.AuthUserId,
                 HouseholdId = existingProfile.HouseholdId

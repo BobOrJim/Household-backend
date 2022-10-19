@@ -12,7 +12,6 @@ namespace Core.Entities
         public string? Avatar { get; set; }
         [MaxLength(7)]
         [MinLength(4)]
-        public string? Color { get; set; }
         public bool? PendingRequest { get; set; }
 
     }

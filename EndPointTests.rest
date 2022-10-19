@@ -46,7 +46,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 #   "Alias": "asd",
 #   "IsAdmin": false,
 #   "Avatar": "???",
-#   "Color": "#bada55",
+#   "Color": "#bada55", Color has now been removed from the base object, and thus shan't be changed.
 #   "PendingRequest" : false
 # }
 // Men allt är optional, JS style

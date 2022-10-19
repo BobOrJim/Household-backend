@@ -45,8 +45,8 @@ namespace Infrastructure.Data
 
             if (!await context.Household.AnyAsync())
             {
-                Profile JanBannanHemma = new Profile() { Id = Profile1Guid, Alias = "JanBannanHemma", Avatar = "", Color = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household1Guid };
-                Profile JanBannanHosMorsan = new Profile() { Id = Profile2Guid, Alias = "JanBannanHosMorsan", Avatar = "", Color = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household2Guid };
+                Profile JanBannanHemma = new Profile() { Id = Profile1Guid, Alias = "JanBannanHemma", Avatar = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household1Guid };
+                Profile JanBannanHosMorsan = new Profile() { Id = Profile2Guid, Alias = "JanBannanHosMorsan", Avatar = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household2Guid };
                 await context.Profile.AddAsync(JanBannanHemma);
                 await context.Profile.AddAsync(JanBannanHosMorsan);
 

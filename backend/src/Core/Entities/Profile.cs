@@ -11,7 +11,6 @@ namespace Core.Entities
 
         public string Alias { get; set; } = "";
         public string Avatar { get; set; } = "";
-        public string Color { get; set; } = "";
         public bool IsAdmin { get; set; } = false;
         public bool PendingRequest { get; set; } = false;
         public Guid AuthUserId { get; set; }
