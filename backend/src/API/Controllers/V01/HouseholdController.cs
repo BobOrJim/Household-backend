@@ -44,14 +44,14 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetHouseholdById/(id:Guid)")]
+        [Route("GetHouseholdById/{id:Guid}")]
         public async Task<IActionResult> GetHouseholdById(Guid id)
         {
-            var household = await _householdRepository.GetByIdAsync(id);
+            Household? household = await _householdRepository.GetByIdAsync(id);
 
-            if(household == null)
+            if (household == null)
             {
-                return BadRequest();
+                return NotFound("ID could not be found");
             }
 
             return Ok(household);
