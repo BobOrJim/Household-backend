@@ -43,6 +43,20 @@ namespace API.Controllers.V01
             }
         }
 
+        [HttpGet]
+        [Route("GetHouseholdById/(id:Guid)")]
+        public async Task<IActionResult> GetHouseholdById(Guid id)
+        {
+            var household = await _householdRepository.GetByIdAsync(id);
+
+            if(household == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(household);
+        }
+
         [HttpPost]
         [Route("AddHousehold", Name = "AddHouseholdAsync")]
         public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdDto HouseholdDto)
