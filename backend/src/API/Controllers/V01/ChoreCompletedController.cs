@@ -16,26 +16,30 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetAllChoreCompleted", Name = "GetAllChoreCompletedAsync")]
-        public async Task<IActionResult> GetAllChoreCompletedAsync()
+        [Route("GetAllChoreCompleted/{householdId:Guid}", Name = "GetAllChoreCompletedAsync")]
+        public async Task<IActionResult> GetAllChoreCompletedAsync(Guid householdId)
         {
-            List<ChoreCompleted>? result = (List<ChoreCompleted>?)await _choreCompletedRepository.GetListAsync(o => true);
+            List<ChoreCompleted>? result = (List<ChoreCompleted>?)await _choreCompletedRepository.GetListAsync(o => o.HouseholdId == householdId);
+
             if (result == null)
             {
                 return NotFound();
             }
+
             return Ok(result);
         }
 
         [HttpGet]
-        [Route("GetChoreCompletedByRange", Name = "GetChoreCompletedByRangeAsync")]
-        public async Task<IActionResult> GetChoreCompletedByRangeAsync(DateTime start, DateTime end)
+        [Route("GetChoreCompletedByRange/{householdId:Guid}", Name = "GetChoreCompletedByRangeAsync")]
+        public async Task<IActionResult> GetChoreCompletedByRangeAsync(Guid householdId, DateTime start, DateTime end)
         {
-            List<ChoreCompleted> result = (List<ChoreCompleted>)await _choreCompletedRepository.GetListAsync(o => o.CompletedAt >= start && o.CompletedAt <= end);
+            List<ChoreCompleted> result = (List<ChoreCompleted>)await _choreCompletedRepository.GetListAsync(o => o.HouseholdId == householdId && o.CompletedAt >= start && o.CompletedAt <= end);
+
             if (result == null)
             {
                 return NotFound();
             }
+
             return Ok(result);
         }
 
