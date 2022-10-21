@@ -46,7 +46,6 @@ namespace API.Controllers.V01
                     AudioUrl = choreDto.AudioUrl,
                     Frequency = choreDto.Frequency,
                     IsArchived = choreDto.IsArchived,
-                    Household = choreDto.Household,
                     HouseholdId = choreDto.HouseholdId,
                 };
 
@@ -59,7 +58,7 @@ namespace API.Controllers.V01
             }
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("UpdateChore/{id:Guid}", Name = "UpdateChoreAsync")]
         public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreDto choreDto, Guid id)
         {
@@ -78,7 +77,6 @@ namespace API.Controllers.V01
                 chore.AudioUrl = choreDto.AudioUrl;
                 chore.Frequency = choreDto.Frequency;
                 chore.IsArchived = choreDto.IsArchived;
-                chore.Household = choreDto.Household;
                 chore.HouseholdId = choreDto.HouseholdId;
 
 
