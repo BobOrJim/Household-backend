@@ -1,5 +1,8 @@
 https://household-backend.azurewebsites.net
 
+
+
+// ___AUTHENTICATE___ //
 ###
 POST https://household-backend.azurewebsites.net/api/V01/Authenticate/login
 content-type: application/json
@@ -17,15 +20,22 @@ content-type: application/json
   "password": "password_A1"
 }
 
+
+
+// ___PROFILE___ //
+
 ###
 // GetByProfileId
 GET https://localhost:7018/api/v01/profile/GetByProfileId/B0000000-0000-0000-0000-000000000001
+
 ###
 // GetByHouseholdId
 GET https://localhost:7018/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
+
 ###
 // GetByUserId
 GET https://localhost:7018/api/v01/profile/GetByAuthUserId/90000000-0000-0000-0000-000000000001
+
 ###
 // CreateProfile
 // Obs skapa egen token
@@ -63,6 +73,9 @@ Content-Type: application/json
 DELETE https://localhost:7018/api/v01/profile/DeleteProfile/b0000000-0000-0000-0000-000000000001
 
 
+
+// ___PAUSE___ //
+
 ###
 // Get first seeded Pause object
 GET https://localhost:7018/api/V01/Pause/GetPauseById/A0000000-0000-0000-0000-000000000001
@@ -90,6 +103,10 @@ Content-Type: application/json
   "householdId": "C0000000-0000-0000-0000-000000000001"
 }
 
+
+
+// ___HOUSEHOLD___ //
+
 ###
 // Uses one of the seeded profiles to find its corresponding household.
 GET https://localhost:7018/api/V01/Household/GetHouseholdByProfileId/b0000000-0000-0000-0000-000000000001
@@ -109,108 +126,45 @@ DELETE https://localhost:7018/api/V01/Household/DeleteHouseholdById/c0000000-000
 
 
 
+// ___CHORE___ //
+
+// Get Chore by Id
+###
+GET https://localhost:7018/api/V01/Chore/GetChoreById/D0000000-0000-0000-0000-000000000001
 
 
-
-
-
-
-
-
-
-### OLD STUFF ATT TJUVTITTA PÅ NEDAN
-
-
-POST https://puppy-backend.azurewebsites.net/api/V01/Authenticate/register
-content-type: application/json
+// Post a Chore
+###
+POST https://localhost:7018/api/V01/Chore/AddChore
+Content-Type: application/json
 
 {
-  "username": "tuco54",
-  "email": "kalleknut54@example.com",
-  "password": "password_A1"
+  "name": "string",
+  "points": 0,
+  "description": "string",
+  "pictureUrl": "string",
+  "audioUrl": "string",
+  "frequency": 0,
+  "isArchived": true,
+  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa2"
 }
-###
-DELETE https://puppy-backend.azurewebsites.net/api/V01/Authenticate/deleteAuthUserById/322a8943-370e-4190-ac9f-4deccc700cb6
 
+// Patch the first seeded chore
 ###
-GET https://puppy-backend.azurewebsites.net/api/V01/Advert/GetAllAdverts
-###
-GET https://puppy-backend.azurewebsites.net/api/V01/Advert/GetAdvertById/AE132576-C4D8-4E8A-D5E5-08DAA13F9E8E
-###
-
-Post https://puppy-backend.azurewebsites.net/api/V01/Advert/AddAdvert
-content-type: application/json
+PATCH https://localhost:7018/api/V01/Chore/UpdateChore/D0000000-0000-0000-0000-000000000001
+Content-Type: application/json
 
 {
-  "userId": "A3E46AE9-4695-46E2-CE87-08DAA182F527",
-    "name": "Urkel",
-    "age": 1,
-    "race": "Terrier",
-    "sex": "Male",
-    "personallity": "Very smart",
-    "rentPeriod": 2,
-    "grade": 1,
-    "review": "",
-    "imageUrls": "https://media.istockphoto.com/photos/dog-with-pencil-at-the-office-picture-id667786852?k=20&m=667786852&s=612x612&w=0&h=WuNB1lGE3kq0ZtbJgetKGc5ytxoGY0Hn4CPreT_QEgM="
-}
-###
-DELETE https://puppy-backend.azurewebsites.net/api/V01/Advert/DeleteAdvertById/7F81F817-EA65-4EC4-6611-08DAA1401796
-###
-
-PATCH  https://puppy-backend.azurewebsites.net/api/V01/Advert/UpdateAdvert/159da9e2-a3ed-4b80-d5ea-08daa13f9e8e
-content-type: application/json
-
-{
-  "userId": "A3E46AE9-4695-46E2-CE87-08DAA182F527",
-  "name": "Throgg",
-  "age": 105,
-  "race": "River troll",
-  "sex": "Male",
-  "personallity": "Likes to cudle",
-  "rentPeriod": 1,
-  "grade": 5,
-  "review": "Ohh dear",
-  "imageUrls": "https://cdna.artstation.com/p/assets/images/images/036/042/444/large/dong-jin-nam-08.jpg?1616583789"
-}
-###
-GET https://puppy-backend.azurewebsites.net/api/V01/Advert/GetAdvertsByUserId/EE5F173E-57EE-4BA2-9729-08DAA13F9E82
-
-###
-GET https://puppy-backend.azurewebsites.net/api/V01/User/GetAllUsers
-###
-GET https://puppy-backend.azurewebsites.net/api/V01/User/GetUserById/60e4e364-15b7-4267-9728-08daa13f9e82
-###
-POST https://puppy-backend.azurewebsites.net/api/V01/User/AddUser
-content-type: application/json
-
-{
-  "alias": "PostUserTest",
-  "phoneNr": "string",
-  "isLoggedIn": true,
-  "profilePictureUrl": "string",
-  "contactEmail": "bannan@gmail.com"
-  "authId": "0a1c4914-ec46-4a99-95cf-6326a35994b4"
+  "name": "string",
+  "points": 2,
+  "description": "string",
+  "pictureUrl": "string",
+  "audioUrl": "string",
+  "frequency": 4,
+  "isArchived": false,
+  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa9"
 }
 
+// Delete the first seeded chore
 ###
-DELETE https://puppy-backend.azurewebsites.net/api/V01/User/DeleteUserById/7007DEAA-D939-4E1B-E69F-08DAA17DF0E1
-###
-
-PATCH  https://puppy-backend.azurewebsites.net/api/V01/User/UpdateUser/A0D98245-4018-41BD-E868-08DAA3355985
-content-type: application/json
-
-{
-  "alias": "Kalle",
-  "phoneNr": "12345",
-  "contactEmail" : "halojAAA@gmail.com",
-  "isLoggedIn": true,
-  "profilePictureUrl": "string",
-  "authId": "98018604-BD97-438A-A088-9E20093304C7"
-}
-
-###
-
-
-
-
-
+DELETE https://localhost:7018/api/V01/Chore/DeleteChore/D0000000-0000-0000-0000-000000000001

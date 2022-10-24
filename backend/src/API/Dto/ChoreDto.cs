@@ -16,7 +16,6 @@ namespace Core.Entities
         public string AudioUrl { get; set; } = "";
         public int Frequency { get; set; } = 0;
         public bool IsArchived { get; set; } = false;
-        public Household Household { get; set; }
         public Guid HouseholdId { get; set; }
     }
 }
