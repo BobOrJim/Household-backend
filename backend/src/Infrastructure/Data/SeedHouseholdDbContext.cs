@@ -56,10 +56,10 @@ namespace Infrastructure.Data
             Guid Chore3Guid = new Guid("D0000000-0000-0000-0000-000000000003");
             Guid Chore4Guid = new Guid("D0000000-0000-0000-0000-000000000004");
 
-            Guid Chore5Guid = new Guid("D0000000-0000-0000-0000-000000000001");
-            Guid Chore6Guid = new Guid("D0000000-0000-0000-0000-000000000002");
-            Guid Chore7Guid = new Guid("D0000000-0000-0000-0000-000000000003");
-            Guid Chore8Guid = new Guid("D0000000-0000-0000-0000-000000000004");
+            Guid Chore5Guid = new Guid("D0000000-0000-0000-0000-000000000005");
+            Guid Chore6Guid = new Guid("D0000000-0000-0000-0000-000000000006");
+            Guid Chore7Guid = new Guid("D0000000-0000-0000-0000-000000000007");
+            Guid Chore8Guid = new Guid("D0000000-0000-0000-0000-000000000008");
 
             Guid ChoreCompleted1 = new Guid("E0000000-0000-0000-0000-000000000001");
             Guid ChoreCompleted2 = new Guid("E0000000-0000-0000-0000-000000000002");
@@ -125,6 +125,7 @@ namespace Infrastructure.Data
                 chores.Add(chore3);
                 chores.Add(chore4);
                 await context.Chore.AddRangeAsync(chores);
+                await context.Chore.AddRangeAsync(chores2);
 
                 ChoreCompleted choreCompleted1 = new ChoreCompleted() { Id = ChoreCompleted1, CompletedAt = new DateTime(2021, 1, 1), ProfileIdQol = Profile1Guid, ChoreId = Chore4Guid, HouseholdId = Household1Guid };
                 ChoreCompleted choreCompleted2 = new ChoreCompleted() { Id = ChoreCompleted2, CompletedAt = new DateTime(2021, 1, 14), ProfileIdQol = Profile1Guid, ChoreId = Chore4Guid, HouseholdId = Household1Guid };

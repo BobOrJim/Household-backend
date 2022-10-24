@@ -28,7 +28,7 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetChoreByHouseholdId/{householdId:Guid}", Name = "GetChoreByHouseholdIdAsync")]
+        [Route("GetChoresByHouseholdId/{householdId:Guid}", Name = "GetChoresByHouseholdIdAsync")]
         public async Task<IActionResult> GetChoreByHouseholdIdAsync(Guid householdId)
         {
             var choreList = await _choreRepository.GetListAsync(c => c.HouseholdId == householdId);
