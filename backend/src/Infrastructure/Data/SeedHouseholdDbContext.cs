@@ -65,11 +65,11 @@ namespace Infrastructure.Data
                 Profile JanBannanHemma = new Profile() { Id = Profile1Guid, Alias = "JanBannanHemma", Avatar = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household1Guid };
                 Profile JanBannanHosMorsan = new Profile() { Id = Profile2Guid, Alias = "JanBannanHosMorsan", Avatar = "", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser1Guid, HouseholdId = Household2Guid };
 
-                Profile Banjo = new Profile() { Id = Profile3Guid, Alias = "Banjo", Avatar = "Frog", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser2Guid, HouseholdId = Household3Guid };
-                Profile Tuco = new Profile() { Id = Profile4Guid, Alias = "Tuco", Avatar = "Fox", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser3Guid, HouseholdId = Household3Guid };
-                Profile Maylee = new Profile() { Id = Profile5Guid, Alias = "Maylee", Avatar = "Unicorn", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser4Guid, HouseholdId = Household3Guid };
-                Profile Alann = new Profile() { Id = Profile6Guid, Alias = "Alann", Avatar = "Owl", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
-                Profile Jimmy = new Profile() { Id = Profile7Guid, Alias = "Jimmy", Avatar = "Dolphin", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser6Guid, HouseholdId = Household3Guid };
+                Profile Banjo = new Profile() { Id = Profile3Guid, Alias = "Banjo", Avatar = "frog", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser2Guid, HouseholdId = Household3Guid };
+                Profile Tuco = new Profile() { Id = Profile4Guid, Alias = "Tuco", Avatar = "fox", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser3Guid, HouseholdId = Household3Guid };
+                Profile Maylee = new Profile() { Id = Profile5Guid, Alias = "Maylee", Avatar = "unicorn", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser4Guid, HouseholdId = Household3Guid };
+                Profile Alann = new Profile() { Id = Profile6Guid, Alias = "Alann", Avatar = "owl", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
+                Profile Jimmy = new Profile() { Id = Profile7Guid, Alias = "Jimmy", Avatar = "dolphin", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser6Guid, HouseholdId = Household3Guid };
 
                 await context.Profile.AddAsync(JanBannanHemma);
                 await context.Profile.AddAsync(JanBannanHosMorsan);
