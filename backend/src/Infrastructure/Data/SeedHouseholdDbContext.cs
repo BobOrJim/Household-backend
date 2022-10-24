@@ -55,6 +55,12 @@ namespace Infrastructure.Data
             Guid Chore2Guid = new Guid("D0000000-0000-0000-0000-000000000002");
             Guid Chore3Guid = new Guid("D0000000-0000-0000-0000-000000000003");
             Guid Chore4Guid = new Guid("D0000000-0000-0000-0000-000000000004");
+
+            Guid Chore5Guid = new Guid("D0000000-0000-0000-0000-000000000001");
+            Guid Chore6Guid = new Guid("D0000000-0000-0000-0000-000000000002");
+            Guid Chore7Guid = new Guid("D0000000-0000-0000-0000-000000000003");
+            Guid Chore8Guid = new Guid("D0000000-0000-0000-0000-000000000004");
+
             Guid ChoreCompleted1 = new Guid("E0000000-0000-0000-0000-000000000001");
             Guid ChoreCompleted2 = new Guid("E0000000-0000-0000-0000-000000000002");
             Guid ChoreCompleted3 = new Guid("E0000000-0000-0000-0000-000000000003");
@@ -103,7 +109,17 @@ namespace Infrastructure.Data
                 Chore chore2 = new Chore() { Id = Chore2Guid, Name = "Torka", Points = 4, Description = "Torka Bokhyllan", PictureUrl = "", AudioUrl = "", Frequency = 7, IsArchived = false, HouseholdId = Household2Guid };
                 Chore chore3 = new Chore() { Id = Chore3Guid, Name = "Skrapa", Points = 12, Description = "Skrapa stenläggning", PictureUrl = "", AudioUrl = "", Frequency = 21, IsArchived = false, HouseholdId = Household2Guid };
                 Chore chore4 = new Chore() { Id = Chore4Guid, Name = "Tvätta bilen", Points = 8, Description = "Tvätta bilen utvänding ocn invändigt", PictureUrl = "", AudioUrl = "", Frequency = 14, IsArchived = false, HouseholdId = Household2Guid };
+
+                Chore chore5 = new Chore() { Id = Chore5Guid, Name = "Sanera", Points = 10, Description = "Ta bort Mögel", PictureUrl = "", AudioUrl = "", Frequency = 0, IsArchived = false, HouseholdId = Household3Guid };
+                Chore chore6 = new Chore() { Id = Chore6Guid, Name = "Torka", Points = 4, Description = "Torka Bokhyllan", PictureUrl = "", AudioUrl = "", Frequency = 7, IsArchived = false, HouseholdId = Household3Guid };
+                Chore chore7 = new Chore() { Id = Chore7Guid, Name = "Skrapa", Points = 12, Description = "Skrapa stenläggning", PictureUrl = "", AudioUrl = "", Frequency = 21, IsArchived = false, HouseholdId = Household3Guid };
+                Chore chore8 = new Chore() { Id = Chore8Guid, Name = "Tvätta bilen", Points = 8, Description = "Tvätta bilen utvänding ocn invändigt", PictureUrl = "", AudioUrl = "", Frequency = 14, IsArchived = false, HouseholdId = Household3Guid };
                 List<Chore> chores = new List<Chore>();
+                List<Chore> chores2 = new List<Chore>();
+                chores2.Add(chore5);
+                chores2.Add(chore6);
+                chores2.Add(chore7);
+                chores2.Add(chore8);
                 chores.Add(chore1);
                 chores.Add(chore2);
                 chores.Add(chore3);
@@ -122,7 +138,7 @@ namespace Infrastructure.Data
 
                 for (int i = 0; i < 300; i++)
                 {
-                    choresCompleted.Add(new ChoreCompleted() { Id = new Guid(), CompletedAt = new DateTime(2022, random.Next(1, 12), random.Next(1, 28)), ProfileIdQol = profileIds[random.Next(0, profileIds.Count)], ChoreId = chores[random.Next(0, chores.Count)].Id, HouseholdId = Household3Guid });
+                    choresCompleted.Add(new ChoreCompleted() { Id = new Guid(), CompletedAt = new DateTime(2022, random.Next(1, 12), random.Next(1, 28)), ProfileIdQol = profileIds[random.Next(0, profileIds.Count)], ChoreId = chores2[random.Next(0, chores.Count)].Id, HouseholdId = Household3Guid });
                 }
                 await context.ChoreCompleted.AddRangeAsync(choresCompleted);
 

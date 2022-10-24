@@ -27,6 +27,19 @@ namespace API.Controllers.V01
             return Ok(choreObject);
         }
 
+        [HttpGet]
+        [Route("GetChoreByHouseholdId/{householdId:Guid}", Name = "GetChoreByHouseholdIdAsync")]
+        public async Task<IActionResult> GetChoreByHouseholdIdAsync(Guid householdId)
+        {
+            var choreList = await _choreRepository.GetListAsync(c => c.HouseholdId == householdId);
+            if (choreList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(choreList);
+        }
+
         [HttpPost]
         [Route("AddChore", Name = "AddChoreAsync")]
         public async Task<IActionResult> AddChoreAsync([FromBody] ChoreDto choreDto)
