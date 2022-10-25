@@ -36,6 +36,7 @@ namespace Infrastructure.Data
             Guid Pause1Guid = new Guid("A0000000-0000-0000-0000-000000000001");
             Guid Pause2Guid = new Guid("A0000000-0000-0000-0000-000000000002");
             Guid Pause3Guid = new Guid("A0000000-0000-0000-0000-000000000003");
+
             Guid Profile1Guid = new Guid("B0000000-0000-0000-0000-000000000001");
             Guid Profile2Guid = new Guid("B0000000-0000-0000-0000-000000000002");
 
@@ -135,7 +136,7 @@ namespace Infrastructure.Data
                 choresCompleted.Add(choreCompleted2);
                 choresCompleted.Add(choreCompleted3);
                 var random = new Random();
-                List<Guid> profileIds = new List<Guid> { Profile1Guid, Profile2Guid, Profile3Guid, Profile4Guid, Profile5Guid, Profile6Guid, Profile7Guid };
+                List<Guid> profileIds = new List<Guid> { Profile3Guid, Profile4Guid, Profile5Guid, Profile6Guid, Profile7Guid };
 
                 for (int i = 0; i < 300; i++)
                 {
