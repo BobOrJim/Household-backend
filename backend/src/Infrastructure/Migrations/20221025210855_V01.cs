@@ -31,7 +31,7 @@ namespace Infrastructure.Migrations
                     Points = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AudioUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AudioUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Frequency = table.Column<int>(type: "int", nullable: false),
                     IsArchived = table.Column<bool>(type: "bit", nullable: false),
                     HouseholdId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -48,13 +48,33 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pause",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HouseholdId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfileIdQol = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pause", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pause_Household_HouseholdId",
+                        column: x => x.HouseholdId,
+                        principalTable: "Household",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Profile",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Alias = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AvatarColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false),
                     PendingRequest = table.Column<bool>(type: "bit", nullable: false),
                     AuthUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -77,8 +97,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CompletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ChoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProfileIdQol = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ChoreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    HouseholdId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,30 +110,10 @@ namespace Infrastructure.Migrations
                         principalTable: "Chore",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ChoreCompleted_Profile_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profile",
+                        name: "FK_ChoreCompleted_Household_HouseholdId",
+                        column: x => x.HouseholdId,
+                        principalTable: "Household",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pause",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProfileId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pause", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pause_Profile_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -126,20 +127,19 @@ namespace Infrastructure.Migrations
                 column: "ChoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChoreCompleted_ProfileId",
+                name: "IX_ChoreCompleted_HouseholdId",
                 table: "ChoreCompleted",
-                column: "ProfileId");
+                column: "HouseholdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pause_ProfileId",
+                name: "IX_Pause_HouseholdId",
                 table: "Pause",
-                column: "ProfileId");
+                column: "HouseholdId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Profile_HouseholdId",
                 table: "Profile",
-                column: "HouseholdId",
-                unique: true);
+                column: "HouseholdId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -151,10 +151,10 @@ namespace Infrastructure.Migrations
                 name: "Pause");
 
             migrationBuilder.DropTable(
-                name: "Chore");
+                name: "Profile");
 
             migrationBuilder.DropTable(
-                name: "Profile");
+                name: "Chore");
 
             migrationBuilder.DropTable(
                 name: "Household");

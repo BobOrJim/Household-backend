@@ -29,7 +29,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AudioUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -75,14 +74,17 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CompletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ProfileId")
+                    b.Property<Guid?>("HouseholdId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProfileIdQol")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChoreId");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("HouseholdId");
 
                     b.ToTable("ChoreCompleted");
                 });
@@ -115,7 +117,10 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid>("HouseholdId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfileIdQol")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartDate")
@@ -123,7 +128,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileId");
+                    b.HasIndex("HouseholdId");
 
                     b.ToTable("Pause");
                 });
@@ -145,10 +150,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AvatarColor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("HouseholdId")
                         .HasColumnType("uniqueidentifier");
 
@@ -160,8 +161,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HouseholdId")
-                        .IsUnique();
+                    b.HasIndex("HouseholdId");
 
                     b.ToTable("Profile");
                 });
@@ -169,7 +169,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Chore", b =>
                 {
                     b.HasOne("Core.Entities.Household", "Household")
-                        .WithMany("chores")
+                        .WithMany("Chores")
                         .HasForeignKey("HouseholdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -180,58 +180,52 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.ChoreCompleted", b =>
                 {
                     b.HasOne("Core.Entities.Chore", "Chore")
-                        .WithMany("choresCompleted")
+                        .WithMany("ChoresCompleted")
                         .HasForeignKey("ChoreId");
 
-                    b.HasOne("Core.Entities.Profile", "Profile")
-                        .WithMany("choresCompleted")
-                        .HasForeignKey("ProfileId");
+                    b.HasOne("Core.Entities.Household", "Household")
+                        .WithMany("ChoresCompleted")
+                        .HasForeignKey("HouseholdId");
 
                     b.Navigation("Chore");
 
-                    b.Navigation("Profile");
+                    b.Navigation("Household");
                 });
 
             modelBuilder.Entity("Core.Entities.Pause", b =>
                 {
-                    b.HasOne("Core.Entities.Profile", "Profile")
-                        .WithMany("Pauses")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
-                });
-
-            modelBuilder.Entity("Core.Entities.Profile", b =>
-                {
                     b.HasOne("Core.Entities.Household", "Household")
-                        .WithOne("Profile")
-                        .HasForeignKey("Core.Entities.Profile", "HouseholdId")
+                        .WithMany("Pauses")
+                        .HasForeignKey("HouseholdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Household");
                 });
 
+            modelBuilder.Entity("Core.Entities.Profile", b =>
+                {
+                    b.HasOne("Core.Entities.Household", null)
+                        .WithMany("Profiles")
+                        .HasForeignKey("HouseholdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Core.Entities.Chore", b =>
                 {
-                    b.Navigation("choresCompleted");
+                    b.Navigation("ChoresCompleted");
                 });
 
             modelBuilder.Entity("Core.Entities.Household", b =>
                 {
-                    b.Navigation("Profile")
-                        .IsRequired();
+                    b.Navigation("Chores");
 
-                    b.Navigation("chores");
-                });
+                    b.Navigation("ChoresCompleted");
 
-            modelBuilder.Entity("Core.Entities.Profile", b =>
-                {
                     b.Navigation("Pauses");
 
-                    b.Navigation("choresCompleted");
+                    b.Navigation("Profiles");
                 });
 #pragma warning restore 612, 618
         }
