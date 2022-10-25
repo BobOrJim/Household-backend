@@ -78,7 +78,7 @@ DELETE https://localhost:7018/api/v01/profile/DeleteProfile/b0000000-0000-0000-0
 
 ###
 // Get first seeded Pause object
-GET https://localhost:7018/api/V01/Pause/GetPauseById/A0000000-0000-0000-0000-000000000001
+GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseByHouseholdId/A0000000-0000-0000-0000-000000000001
 
 ###
 POST https://localhost:7018/api/V01/Pause/AddPause

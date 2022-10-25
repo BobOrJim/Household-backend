@@ -17,15 +17,15 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetPauseById/{id:Guid}", Name = "GetPauseByIdAsync")]
-        public async Task<IActionResult> GetPauseByIdAsync(Guid id)
+        [Route("GetPauseByHouseholdId/{id:Guid}", Name = "GetPauseByHouseholdIdAsync")]
+        public async Task<IActionResult> GetPauseByHouseholdIdAsync(Guid id)
         {
-            Pause? pauseObject = await _pauseRepository.GetByIdAsync(id);
-            if (pauseObject == null)
+            IEnumerable<Pause>? pauseObjects = await _pauseRepository.GetListAsync(p => p.HouseholdId == id);
+            if (pauseObjects == null)
             {
                 return NotFound();
             }
-            return Ok(pauseObject);
+            return Ok(pauseObjects);
         }
 
         [HttpPost]
