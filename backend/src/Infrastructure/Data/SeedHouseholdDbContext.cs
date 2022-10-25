@@ -87,9 +87,9 @@ namespace Infrastructure.Data
                 await context.Profile.AddAsync(Alann);
                 await context.Profile.AddAsync(Jimmy);
 
-                Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
-                Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
-                Pause pause3 = new Pause() { Id = Pause3Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileIdQol = Profile1Guid, HouseholdId = Household2Guid };
+                Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
+                Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
+                Pause pause3 = new Pause() { Id = Pause3Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
                 List<Pause> pauses = new List<Pause>();
                 pauses.Add(pause1);
                 pauses.Add(pause2);
