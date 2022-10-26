@@ -48,7 +48,7 @@ namespace Infrastructure.Data
             Guid Profile6Guid = new Guid("B0000000-0000-0000-0000-000000000006");
             Guid Profile7Guid = new Guid("B0000000-0000-0000-0000-000000000007");
             Guid Profile8Guid = new Guid("B0000000-0000-0000-0000-000000000008");
-
+            Guid Profile9Guid = new Guid("B0000000-0000-0000-0000-000000000009");
 
             Guid Household1Guid = new Guid("C0000000-0000-0000-0000-000000000001");
             Guid Household2Guid = new Guid("C0000000-0000-0000-0000-000000000002");
@@ -81,6 +81,7 @@ namespace Infrastructure.Data
                 Profile Alann = new Profile() { Id = Profile6Guid, Alias = "Alann", Avatar = "owl", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
                 Profile Jimmy = new Profile() { Id = Profile7Guid, Alias = "Jimmy", Avatar = "dolphin", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser6Guid, HouseholdId = Household3Guid };
                 Profile Bamse = new Profile() { Id = Profile8Guid, Alias = "Bamse", Avatar = "pig", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
+                Profile Batman = new Profile() { Id = Profile9Guid, Alias = "Batman", Avatar = "octopus", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
 
 
                 await context.Profile.AddAsync(JanBannanHemma);
@@ -92,6 +93,7 @@ namespace Infrastructure.Data
                 await context.Profile.AddAsync(Alann);
                 await context.Profile.AddAsync(Jimmy);
                 await context.Profile.AddAsync(Bamse);
+                await context.Profile.AddAsync(Batman);
 
                 Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
                 Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
