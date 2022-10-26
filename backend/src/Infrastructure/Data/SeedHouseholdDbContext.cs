@@ -47,6 +47,7 @@ namespace Infrastructure.Data
             Guid Profile5Guid = new Guid("B0000000-0000-0000-0000-000000000005");
             Guid Profile6Guid = new Guid("B0000000-0000-0000-0000-000000000006");
             Guid Profile7Guid = new Guid("B0000000-0000-0000-0000-000000000007");
+            Guid Profile8Guid = new Guid("B0000000-0000-0000-0000-000000000008");
 
 
             Guid Household1Guid = new Guid("C0000000-0000-0000-0000-000000000001");
@@ -79,6 +80,8 @@ namespace Infrastructure.Data
                 Profile Maylee = new Profile() { Id = Profile5Guid, Alias = "Maylee", Avatar = "unicorn", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser4Guid, HouseholdId = Household3Guid };
                 Profile Alann = new Profile() { Id = Profile6Guid, Alias = "Alann", Avatar = "owl", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
                 Profile Jimmy = new Profile() { Id = Profile7Guid, Alias = "Jimmy", Avatar = "dolphin", IsAdmin = true, PendingRequest = false, AuthUserId = AuthUser6Guid, HouseholdId = Household3Guid };
+                Profile Bamse = new Profile() { Id = Profile8Guid, Alias = "Bamse", Avatar = "pig", IsAdmin = false, PendingRequest = false, AuthUserId = AuthUser5Guid, HouseholdId = Household3Guid };
+
 
                 await context.Profile.AddAsync(JanBannanHemma);
                 await context.Profile.AddAsync(JanBannanHosMorsan);
