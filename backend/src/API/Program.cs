@@ -107,8 +107,9 @@ using (var scope = app.Services.CreateScope())
 
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<HouseholdDbContext>();
-    await SeedHouseholdDbContext.SeedAsync(context);
-
+    
+        //Jimmy: 221026. Har lite trassel vid övergång till riktig db, så jag har tmp inaktiverat här
+        //await SeedHouseholdDbContext.SeedAsync(context);
 }
 
 
