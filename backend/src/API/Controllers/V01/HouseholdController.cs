@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Core.Entities;
-using Core.Interfaces.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -29,13 +29,14 @@ namespace API.Controllers.V01
                 Household? householdObject = await _householdRepository.GetByIdAsync(profileObject.HouseholdId);
                 if (householdObject == null) return NotFound("Profile found, but no household by ID is tied to it(this should be impossible :o)");
 
-                HouseholdDto result = new HouseholdDto
+                HouseholdOutDto householdDto = new HouseholdOutDto
                 {
+                    Id = householdObject.Id,
                     Code = householdObject.Code,
                     Name = householdObject.Name,
                 };
 
-                return Ok(householdObject);
+                return Ok(householdDto);
             }
             catch (Exception e)
             {
@@ -53,13 +54,19 @@ namespace API.Controllers.V01
             {
                 return NotFound("ID could not be found");
             }
+            HouseholdOutDto householdDto = new HouseholdOutDto
+            {
+                Id = household.Id,
+                Code = household.Code,
+                Name = household.Name,
+            };
 
-            return Ok(household);
+            return Ok(householdDto);
         }
 
         [HttpPost]
         [Route("AddHousehold", Name = "AddHouseholdAsync")]
-        public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdDto HouseholdDto)
+        public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdOutDto HouseholdDto)
         {
             if (!ModelState.IsValid)
             {

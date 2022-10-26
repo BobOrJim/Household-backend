@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Core.Entities;
-using Core.Interfaces.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -25,12 +25,21 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            return Ok(pauseObjects);
+            IEnumerable<PauseOutDto> pauseDtoList = pauseObjects.Select(pause => new PauseOutDto
+            {
+                Id = pause.Id,
+                StartDate = pause.StartDate,
+                EndDate = pause.EndDate,
+                ProfileIdQol = pause.ProfileIdQol,
+                HouseholdId = pause.HouseholdId
+            });
+
+            return Ok(pauseDtoList);
         }
 
         [HttpPost]
         [Route("AddPause", Name = "AddPauseAsync")]
-        public async Task<IActionResult> AddPauseAsync([FromBody] PauseDto pauseDto)
+        public async Task<IActionResult> AddPauseAsync([FromBody] PauseOutDto pauseDto)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +66,7 @@ namespace API.Controllers.V01
 
         [HttpPut]
         [Route("UpdatePause/{id:Guid}", Name = "UpdatePauseAsync")]
-        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseDto pauseDto, Guid id)
+        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseOutDto pauseDto, Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +75,10 @@ namespace API.Controllers.V01
             try
             {
                 Pause? pause = await _pauseRepository.GetByIdAsync(id);
-
+                if (pause == null)
+                {
+                    return NotFound();
+                }
                 pause.StartDate = pauseDto.StartDate;
                 pause.EndDate = pauseDto.EndDate;
                 pause.ProfileIdQol = pauseDto.ProfileIdQol;

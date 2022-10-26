@@ -1,5 +1,6 @@
+using API.Dto;
 using Core.Entities;
-using Core.Interfaces.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -23,46 +24,74 @@ namespace API.Controllers.V01
         [Route("GetByUserId/{id:Guid}")]
         public async Task<IActionResult> GetByAuthUserId(Guid id)
         {
-            var profiles = await _profileRepository.GetListAsync(p => p.AuthUserId == id);
-
+            IEnumerable<Profile> profiles = await _profileRepository.GetListAsync(p => p.AuthUserId == id);
             if (profiles == null)
             {
                 return NotFound();
             }
-
-            return Ok(profiles);
+            IEnumerable<ProfileOutDto> profileDtos = profiles.Select(p => new ProfileOutDto
+            {
+                Id = p.Id,
+                Alias = p.Alias,
+                Avatar = p.Avatar,
+                IsAdmin = p.IsAdmin,
+                PendingRequest = p.PendingRequest,
+                AuthUserId = p.AuthUserId,
+                HouseholdId = p.HouseholdId
+            });
+            return Ok(profileDtos);
         }
 
         [HttpGet]
         [Route("GetByHouseholdId/{id:Guid}")]
         public async Task<IActionResult> GetByHouseholdId(Guid id)
         {
-            var profiles = await _profileRepository.GetListAsync(p => p.HouseholdId == id);
+            IEnumerable<Profile> profiles = await _profileRepository.GetListAsync(p => p.HouseholdId == id);
             if (profiles == null)
             {
                 return NotFound();
             }
+            IEnumerable<ProfileOutDto> profileDtos = profiles.Select(p => new ProfileOutDto
+            {
+                Id = p.Id,
+                Alias = p.Alias,
+                Avatar = p.Avatar,
+                IsAdmin = p.IsAdmin,
+                PendingRequest = p.PendingRequest,
+                AuthUserId = p.AuthUserId,
+                HouseholdId = p.HouseholdId
+            });
 
-            return Ok(profiles);
+            return Ok(profileDtos);
         }
 
         [HttpGet]
         [Route("GetByProfileId/{id:Guid}")]
         public async Task<IActionResult> GetByProfileId(Guid id)
         {
-            var profiles = await _profileRepository.GetListAsync(p => p.Id == id);
+            IEnumerable<Profile> profiles = await _profileRepository.GetListAsync(p => p.Id == id);
             if (profiles == null)
             {
                 return NotFound();
             }
+            IEnumerable<ProfileOutDto> profileDtos = profiles.Select(p => new ProfileOutDto
+            {
+                Id = p.Id,
+                Alias = p.Alias,
+                Avatar = p.Avatar,
+                IsAdmin = p.IsAdmin,
+                PendingRequest = p.PendingRequest,
+                AuthUserId = p.AuthUserId,
+                HouseholdId = p.HouseholdId
+            });
 
-            return Ok(profiles);
+            return Ok(profileDtos);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("CreateProfile")]
-        public async Task<IActionResult> AddProfile([FromBody] ProfileCreateDto profileDto)
+        public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
         {
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -74,11 +103,11 @@ namespace API.Controllers.V01
 
             var insertedUser = await _profileRepository.InsertAsync(new Profile()
             {
-                Alias = profileDto.Alias,
+                Alias = profileCreateDto.Alias,
                 Avatar = "pending",
-                IsAdmin = profileDto.IsAdmin,
-                PendingRequest = profileDto.IsAdmin ? false : true,
-                HouseholdId = profileDto.HouseholdId ?? new Guid(),
+                IsAdmin = profileCreateDto.IsAdmin,
+                PendingRequest = profileCreateDto.IsAdmin ? false : true,
+                HouseholdId = profileCreateDto.HouseholdId ?? new Guid(),
                 AuthUserId = new Guid(authUserId),
             });
 
@@ -92,7 +121,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("EditProfile/{id:Guid}")]
-        public async Task<IActionResult> UpdateProfile(Guid id, [FromBody] ProfileUpdateDto profileDto)
+        public async Task<IActionResult> UpdateProfile(Guid id, [FromBody] ProfileUpdateInDto profileEditDto)
         {
             var existingProfile = await _profileRepository.GetByIdAsync(id);
 
@@ -104,10 +133,10 @@ namespace API.Controllers.V01
             var updatedProfile = await _profileRepository.UpdateAsync(new Profile()
             {
                 Id = existingProfile.Id,
-                Alias = profileDto.Alias ?? existingProfile.Alias,
-                IsAdmin = profileDto.IsAdmin ?? existingProfile.IsAdmin,
-                Avatar = profileDto.Avatar ?? existingProfile.Avatar,
-                PendingRequest = profileDto.PendingRequest ?? existingProfile.PendingRequest,
+                Alias = profileEditDto.Alias ?? existingProfile.Alias,
+                IsAdmin = profileEditDto.IsAdmin ?? existingProfile.IsAdmin,
+                Avatar = profileEditDto.Avatar ?? existingProfile.Avatar,
+                PendingRequest = profileEditDto.PendingRequest ?? existingProfile.PendingRequest,
                 AuthUserId = existingProfile.AuthUserId,
                 HouseholdId = existingProfile.HouseholdId
             });
@@ -137,9 +166,7 @@ namespace API.Controllers.V01
                 return BadRequest();
             }
 
-            return NoContent();
+            return Ok();
         }
-
     }
-
 }

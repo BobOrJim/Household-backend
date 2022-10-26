@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
 using System.Linq.Expressions;
 
-namespace Core.Interfaces.Services
+namespace Core.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {

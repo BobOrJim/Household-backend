@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
-    public class ProfileCreateDto
+    public class ProfileCreateInDto
     {
         [MaxLength(20)]
         public string Alias { get; set; } = "";

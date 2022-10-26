@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class PauseDto
+    public class PauseOutDto
     {
+        public Guid Id { get; set; }
         public DateTime StartDate { get; set; } = new DateTime();
 
         public DateTime EndDate { get; set; } = new DateTime();
