@@ -91,6 +91,7 @@ namespace Infrastructure.Data
                 await context.Profile.AddAsync(Maylee);
                 await context.Profile.AddAsync(Alann);
                 await context.Profile.AddAsync(Jimmy);
+                await context.Profile.AddAsync(Bamse);
 
                 Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
                 Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
