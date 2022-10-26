@@ -36,6 +36,8 @@ namespace Infrastructure.Data
             Guid Pause1Guid = new Guid("A0000000-0000-0000-0000-000000000001");
             Guid Pause2Guid = new Guid("A0000000-0000-0000-0000-000000000002");
             Guid Pause3Guid = new Guid("A0000000-0000-0000-0000-000000000003");
+            Guid Pause4Guid = new Guid("A0000000-0000-0000-0000-000000000004");
+
 
             Guid Profile1Guid = new Guid("B0000000-0000-0000-0000-000000000001");
             Guid Profile2Guid = new Guid("B0000000-0000-0000-0000-000000000002");
@@ -90,10 +92,12 @@ namespace Infrastructure.Data
                 Pause pause1 = new Pause() { Id = Pause1Guid, StartDate = new DateTime(2021, 1, 1), EndDate = new DateTime(2021, 1, 2), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
                 Pause pause2 = new Pause() { Id = Pause2Guid, StartDate = new DateTime(2021, 1, 3), EndDate = new DateTime(2021, 1, 4), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
                 Pause pause3 = new Pause() { Id = Pause3Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileIdQol = Profile7Guid, HouseholdId = Household3Guid };
+                Pause pause4 = new Pause() { Id = Pause4Guid, StartDate = new DateTime(2021, 1, 15), EndDate = new DateTime(2021, 1, 20), ProfileIdQol = Profile6Guid, HouseholdId = Household3Guid };
                 List<Pause> pauses = new List<Pause>();
                 pauses.Add(pause1);
                 pauses.Add(pause2);
                 pauses.Add(pause3);
+                pauses.Add(pause4);
                 await context.Pause.AddRangeAsync(pauses);
 
                 //await context.Household.AddRangeAsync(GetPreconfiguredHouseholds());
