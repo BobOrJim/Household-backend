@@ -24,19 +24,47 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            return Ok(choreObject);
+            ChoreDto choreDto = new ChoreDto
+            {
+                Id = choreObject.Id,
+                Name = choreObject.Name,
+                Points = choreObject.Points,
+                Description = choreObject.Description,
+                PictureUrl = choreObject.PictureUrl,
+                AudioUrl = choreObject.AudioUrl,
+                Frequency = choreObject.Frequency,
+                IsArchived = choreObject.IsArchived,
+                HouseholdId = choreObject.HouseholdId
+            };
+            return Ok(choreDto);
         }
 
         [HttpGet]
         [Route("GetChoresByHouseholdId/{householdId:Guid}", Name = "GetChoresByHouseholdIdAsync")]
         public async Task<IActionResult> GetChoreByHouseholdIdAsync(Guid householdId)
         {
-            var choreList = await _choreRepository.GetListAsync(c => c.HouseholdId == householdId);
+            IEnumerable<Chore> choreList = await _choreRepository.GetListAsync(c => c.HouseholdId == householdId);
             if (choreList == null)
             {
                 return NotFound();
             }
-
+            List<ChoreDto> choreDtoList = new List<ChoreDto>();
+            foreach (Chore choreObject in choreList)
+            {
+                ChoreDto choreDto = new ChoreDto
+                {
+                    Id = choreObject.Id,
+                    Name = choreObject.Name,
+                    Points = choreObject.Points,
+                    Description = choreObject.Description,
+                    PictureUrl = choreObject.PictureUrl,
+                    AudioUrl = choreObject.AudioUrl,
+                    Frequency = choreObject.Frequency,
+                    IsArchived = choreObject.IsArchived,
+                    HouseholdId = choreObject.HouseholdId
+                };
+                choreDtoList.Add(choreDto);
+            }
             return Ok(choreList);
         }
 

@@ -9,6 +9,7 @@ namespace Core.Entities
 {
     public class ChoreDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = "";
         public int Points { get; set; } = 0;
         public string Description { get; set; } = "";

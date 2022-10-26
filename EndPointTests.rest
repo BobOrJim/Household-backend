@@ -16,7 +16,7 @@ POST https://household-backend.azurewebsites.net/api/V01/Authenticate/register
 content-type: application/json
 
 {
-  "username": "tuco54",
+  "username": "tuco544",
   "password": "password_A1"
 }
 
@@ -26,11 +26,11 @@ content-type: application/json
 
 ###
 // GetByProfileId
-GET https://household-backend.azurewebsites.net/api/v01/profile/GetByProfileId/B0000000-0000-0000-0000-000000000001
+GET https://household-backend.azurewebsites.net/api/v01/profile/GetByProfileId/B0000000-0000-0000-0000-000000000004
 
 ###
 // GetByHouseholdId
-GET https://localhost:7018/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
+GET https://household-backend.azurewebsites.net/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
 
 ###
 // GetByUserId
