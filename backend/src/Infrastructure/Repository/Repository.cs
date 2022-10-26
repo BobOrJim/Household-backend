@@ -2,8 +2,8 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Core.Interfaces.Services;
 using System.Diagnostics;
+using Core.Interfaces;
 
 namespace Infrastructure.Repository
 {

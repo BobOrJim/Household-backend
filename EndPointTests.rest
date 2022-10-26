@@ -1,9 +1,9 @@
 https://household-backend.azurewebsites.net
+h_ttps://localhost:7018
 
 
-
-// ___AUTHENTICATE___ //
 ###
+// Authenticate : POST : login
 POST https://household-backend.azurewebsites.net/api/V01/Authenticate/login
 content-type: application/json
 
@@ -11,7 +11,10 @@ content-type: application/json
   "username": "tuco54",
   "password": "password_A1"
 }
+
+
 ###
+// Authenticate : POST : register
 POST https://household-backend.azurewebsites.net/api/V01/Authenticate/register
 content-type: application/json
 
@@ -21,25 +24,138 @@ content-type: application/json
 }
 
 
-
-// ___PROFILE___ //
+###
+// Chore : GET : GetChoreById
+GET https://household-backend.azurewebsites.net/api/V01/Chore/GetChoreById/D0000000-0000-0000-0000-000000000001
 
 ###
-// GetByProfileId
+// Chore : GET : GetChoresByHouseholdId
+GET https://household-backend.azurewebsites.net/api/V01/Chore/GetChoresByHouseholdId/C0000000-0000-0000-0000-000000000003
+
+###
+// Chore : POST : AddChore
+POST https://household-backend.azurewebsites.net/api/V01/Chore/AddChore
+Content-Type: application/json
+
+{
+  "name": "Torka hyllorna i köket",
+  "points": 10,
+  "description": "Ovan spis och ovan kyl+frys",
+  "pictureUrl": "",
+  "audioUrl": "",
+  "frequency": 0,
+  "isArchived": false,
+  "householdId": "C0000000-0000-0000-0000-000000000003"
+}
+
+###
+// Chore : PATCH : UpdateChore
+PATCH https://household-backend.azurewebsites.net/api/V01/Chore/UpdateChore/d0000000-0000-0000-0000-000000000008
+Content-Type: application/json
+
+{
+    "name": "Tvätta bilen OCH SLÄPET",
+    "points": 8,
+    "description": "Tvätta bilen utvänding ocn invändigt OCH SLÄPET!!",
+    "pictureUrl": "",
+    "audioUrl": "",
+    "frequency": 14,
+    "isArchived": false,
+    "householdId": "c0000000-0000-0000-0000-000000000003"
+}
+
+###
+// Chore : DELETE : DeleteChore (funkar men svarar med 204)
+DELETE https://household-backend.azurewebsites.net/api/V01/Chore/DeleteChore/60A9A8ED-E8DE-48CB-6DC1-08DAB781CB5E
+
+###
+// ChoreCompleted : GET : GetAllChoreCompleted
+GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetAllChoreCompletedByHouseholdId/C0000000-0000-0000-0000-000000000003
+
+###
+// GetChoreCompleted : GET : GetChoreCompletedByHouseholdIdAndByRange
+GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetChoreCompletedByHouseholdIdAndByRange/C0000000-0000-0000-0000-000000000003?start=2018-03-20T09%3A12%3A28Z&end=2023-03-20T09%3A12%3A28Z
+
+###
+// NOT WORKING, WILL FIX LATER
+// ChoreCompleted : POST : AddChoreCompleted
+POST https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/AddChoreCompleted
+
+{
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "completedAt": "2022-11-26T19:10:06.337Z",
+  "profileIdQol": "B0000000-0000-0000-0000-000000000007",
+  "choreId": "D0000000-0000-0000-0000-000000000007",
+  "householdId": "C0000000-0000-0000-0000-000000000003"
+}
+
+###
+// Household : GET : GetHouseholdByProfileId
+GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdByProfileId/B0000000-0000-0000-0000-000000000007
+
+###
+// Household : GET : GetHouseholdById
+GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdById/C0000000-0000-0000-0000-000000000003
+
+###
+// Household : POST : AddHousehold
+POST https://household-backend.azurewebsites.net/api/V01/Household/AddHousehold
+Content-Type: application/json
+
+{
+  "name": "HemmetPåBergetDärBorta",
+  "code": "991105"
+}
+
+###
+// Household : DELETE : DeleteHouseholdById
+DELETE https://household-backend.azurewebsites.net/api/V01/Household/DeleteHouseholdById/7DCF8219-3F5F-4097-8A3B-08DAB789ADFD
+
+
+###
+// Pause : GET : GetPauseByHouseholdId
+GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseByHouseholdId/C0000000-0000-0000-0000-000000000003
+
+###
+// Pause : POST : AddPause
+POST https://household-backend.azurewebsites.net/api/V01/Pause/AddPause
+Content-Type: application/json
+
+{
+  "startDate": "2022-10-17T10:52:41.517Z",
+  "endDate": "2022-11-17T10:52:41.517Z",
+  "profileIdQol": "B0000000-0000-0000-0000-000000000007",
+  "householdId": "C0000000-0000-0000-0000-000000000003"
+}
+
+###
+// Pause : PUT : UpdatePause
+PUT https://household-backend.azurewebsites.net/api/V01/Pause/UpdatePause/A0000000-0000-0000-0000-000000000004
+Content-Type: application/json
+
+{
+  "startDate": "2022-10-17T10:52:41.517Z",
+  "endDate": "2022-12-17T10:52:41.517Z",
+  "profileIdQol": "B0000000-0000-0000-0000-000000000007",
+  "householdId": "C0000000-0000-0000-0000-000000000003"
+}
+
+
+###
+// Profile : GET : GetProfileById
 GET https://household-backend.azurewebsites.net/api/v01/profile/GetByProfileId/B0000000-0000-0000-0000-000000000004
 
 ###
-// GetByHouseholdId
+// Profile : GET : GetProfileByHouseholdId
 GET https://household-backend.azurewebsites.net/api/v01/profile/GetByHouseholdId/c0000000-0000-0000-0000-000000000001
 
 ###
-// GetByUserId
-GET https://localhost:7018/api/v01/profile/GetByAuthUserId/90000000-0000-0000-0000-000000000001
+// Profile : POST : GetByUserId
+GET https://household-backend.azurewebsites.net/api/V01/Profile/GetByUserId/286C4279-BCE5-4DBD-830A-10D2AAB95ECD
 
 ###
-// CreateProfile
-// Obs skapa egen token
-POST https://localhost:7018/api/v01/profile/CreateProfile/
+// Profile : POST : CreateProfile
+POST https://household-backend.azurewebsites.net/api/v01/profile/CreateProfile/
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hbm9ueW1vdXMiOiI2ZmZhZTI4Ni1iNjRhLTRlNWEtYWFiZC04OTAzOTRmOWE5M2MiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidHVjbzU0IiwianRpIjoiZDcyNTVjNzYtMmM3Yy00NzEzLWI2MTMtZGYxNjFkYWM1OWZjIiwiZXhwIjoxNjY3NjU0NzA0LCJpc3MiOiJUcnVlIiwiYXVkIjoiVHJ1ZSJ9.a6uDTPZtQZlKLwKQHMQDune9wX11FkbqIijxTaD_5VM
 
@@ -49,122 +165,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
   "isAdmin": false
 }
 
-
-// UpdateProfile
-// Saker som går att uppdatera är:
-# {
-#   "Alias": "asd",
-#   "IsAdmin": false,
-#   "Avatar": "???",
-#   "Color": "#bada55", Color has now been removed from the base object, and thus shan't be changed.
-#   "PendingRequest" : false
-# }
-// Men allt är optional, JS style
 ###
-PATCH https://localhost:7018/api/v01/profile/EditProfile/b0000000-0000-0000-0000-000000000001
+// Profile : PATCH : EditProfile
+PATCH https://household-backend.azurewebsites.net/api/v01/profile/EditProfile/3073EC2F-EF6A-46AC-3BF0-08DAB78CF931
 Content-Type: application/json
 
 {
-  "Alias": "JanBananHemma"
+  "alias": "KalleString",
+  "isAdmin": true,
+  "avatar": "string",
+  "pendingRequest": true
 }
 
 ###
-// DeleteProfile
-DELETE https://localhost:7018/api/v01/profile/DeleteProfile/b0000000-0000-0000-0000-000000000001
+// Profile : DELETE : DeleteProfile
+DELETE https://household-backend.azurewebsites.net/api/v01/profile/DeleteProfile/3073EC2F-EF6A-46AC-3BF0-08DAB78CF931
 
-
-
-// ___PAUSE___ //
-
-###
-// Get first seeded Pause object
-GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseByHouseholdId/C0000000-0000-0000-0000-000000000002
-
-###
-POST https://localhost:7018/api/V01/Pause/AddPause
-Content-Type: application/json
-
-{
-  "startDate": "2022-10-17T10:52:41.517Z",
-  "endDate": "2022-10-17T10:52:41.517Z",
-  "profileIdQol": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "householdId": "C0000000-0000-0000-0000-000000000001"
-}
-
-###
-// Change the first seeded Pause object
-PUT https://localhost:7018/api/V01/Pause/UpdatePause/A0000000-0000-0000-0000-000000000001
-Content-Type: application/json
-
-{
-  "startDate": "2022-10-17T10:57:49.015Z",
-  "endDate": "2022-10-17T10:57:49.015Z",
-  "profileIdQol": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "householdId": "C0000000-0000-0000-0000-000000000001"
-}
-
-
-
-// ___HOUSEHOLD___ //
-
-###
-// Uses one of the seeded profiles to find its corresponding household.
-GET https://localhost:7018/api/V01/Household/GetHouseholdByProfileId/b0000000-0000-0000-0000-000000000001
-
-###
-POST https://localhost:7018/api/V01/Household/AddHousehold
-Content-Type: application/json
-
-{
-  "name": "HemmetPåBergetDärBorta",
-  "code": "991105"
-}
-
-###
-// Try this delete, and the household-get-endpoint will fail.
-DELETE https://localhost:7018/api/V01/Household/DeleteHouseholdById/c0000000-0000-0000-0000-000000000001
-
-
-
-// ___CHORE___ //
-
-// Get Chore by Id
-###
-GET https://localhost:7018/api/V01/Chore/GetChoreById/D0000000-0000-0000-0000-000000000001
-
-
-// Post a Chore
-###
-POST https://localhost:7018/api/V01/Chore/AddChore
-Content-Type: application/json
-
-{
-  "name": "string",
-  "points": 0,
-  "description": "string",
-  "pictureUrl": "string",
-  "audioUrl": "string",
-  "frequency": 0,
-  "isArchived": true,
-  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa2"
-}
-
-// Patch the first seeded chore
-###
-PATCH https://localhost:7018/api/V01/Chore/UpdateChore/D0000000-0000-0000-0000-000000000001
-Content-Type: application/json
-
-{
-  "name": "string",
-  "points": 2,
-  "description": "string",
-  "pictureUrl": "string",
-  "audioUrl": "string",
-  "frequency": 4,
-  "isArchived": false,
-  "householdId": "3fa85f64-5717-4562-b3fc-2c963f66afa9"
-}
-
-// Delete the first seeded chore
-###
-DELETE https://localhost:7018/api/V01/Chore/DeleteChore/D0000000-0000-0000-0000-000000000001

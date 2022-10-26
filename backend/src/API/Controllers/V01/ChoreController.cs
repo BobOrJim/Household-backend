@@ -1,5 +1,5 @@
 using Core.Entities;
-using Core.Interfaces.Services;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -24,7 +24,7 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            ChoreDto choreDto = new ChoreDto
+            ChoreInOutDto choreDto = new ChoreInOutDto
             {
                 Id = choreObject.Id,
                 Name = choreObject.Name,
@@ -48,10 +48,10 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            List<ChoreDto> choreDtoList = new List<ChoreDto>();
+            List<ChoreInOutDto> choreDtoList = new List<ChoreInOutDto>();
             foreach (Chore choreObject in choreList)
             {
-                ChoreDto choreDto = new ChoreDto
+                ChoreInOutDto choreDto = new ChoreInOutDto
                 {
                     Id = choreObject.Id,
                     Name = choreObject.Name,
@@ -65,12 +65,12 @@ namespace API.Controllers.V01
                 };
                 choreDtoList.Add(choreDto);
             }
-            return Ok(choreList);
+            return Ok(choreDtoList);
         }
 
         [HttpPost]
         [Route("AddChore", Name = "AddChoreAsync")]
-        public async Task<IActionResult> AddChoreAsync([FromBody] ChoreDto choreDto)
+        public async Task<IActionResult> AddChoreAsync([FromBody] ChoreInOutDto choreDto)
         {
             if (!ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("UpdateChore/{id:Guid}", Name = "UpdateChoreAsync")]
-        public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreDto choreDto, Guid id)
+        public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreInOutDto choreDto, Guid id)
         {
             if (!ModelState.IsValid)
             {

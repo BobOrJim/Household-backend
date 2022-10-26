@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class ChoreDto
+    public class ChoreInOutDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = "";

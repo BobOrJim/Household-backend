@@ -7,27 +7,18 @@ using System.Text;
 using Infrastructure;
 using Infrastructure.Data;
 using Infrastructure.Repository;
-using Core.Services;
-using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Identity.Web;
+using Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//For IRCDbContext config
-Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<HouseholdDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IAdvertService, AdvertService>();
-builder.Services.AddScoped<IUserService, UserService>();
-//Remove this comment. Its here to trigger new Build
-
 
 // For Entity Framework for identity
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
-// builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("fortKnox"));
 
 // For Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -65,7 +56,6 @@ builder.Services.AddSignalR(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -95,12 +85,6 @@ app.UseRouting();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseEndpoints(endpoints =>
-{
-    //Not used in this app
-});
-
 
 using (var scope = app.Services.CreateScope())
 {
