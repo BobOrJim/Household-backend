@@ -16,7 +16,7 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetChoreById/{id:Guid}", Name = "GetChoreByIdAsync")]
+        [Route("GetChoreById/{id:Guid}", Name = "GetChoreById")]
         public async Task<IActionResult> GetChoreByIdAsync(Guid id)
         {
             Chore? choreObject = await _choreRepository.GetByIdAsync(id);
@@ -90,8 +90,19 @@ namespace API.Controllers.V01
                     HouseholdId = choreDto.HouseholdId,
                 };
 
-                await _choreRepository.InsertAsync(result);
-                return Ok();
+                var insertedChore = await _choreRepository.InsertAsync(result);
+
+                return CreatedAtAction("GetChoreById", new { id = insertedChore.Id }, new ChoreInOutDto()
+                {
+                    Name = insertedChore.Name,
+                    Points = insertedChore.Points,
+                    Description = insertedChore.Description,
+                    PictureUrl = insertedChore.PictureUrl,
+                    AudioUrl = insertedChore.AudioUrl,
+                    Frequency = insertedChore.Frequency,
+                    IsArchived = insertedChore.IsArchived,
+                    HouseholdId = insertedChore.HouseholdId,
+                });
             }
             catch (Exception e)
             {
@@ -121,8 +132,19 @@ namespace API.Controllers.V01
                 chore.HouseholdId = choreDto.HouseholdId;
 
 
-                await _choreRepository.UpdateAsync(chore);
-                return Ok();
+                var updatedChore = await _choreRepository.UpdateAsync(chore);
+                return Ok(new ChoreInOutDto()
+                {
+                    Id = updatedChore.Id,
+                    Name = updatedChore.Name,
+                    Points = updatedChore.Points,
+                    Description = updatedChore.Description,
+                    PictureUrl = updatedChore.PictureUrl,
+                    AudioUrl = updatedChore.AudioUrl,
+                    Frequency = updatedChore.Frequency,
+                    IsArchived = updatedChore.IsArchived,
+                    HouseholdId = updatedChore.HouseholdId,
+                });
             }
             catch (Exception e)
             {

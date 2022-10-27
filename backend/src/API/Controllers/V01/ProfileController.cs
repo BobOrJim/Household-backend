@@ -88,7 +88,7 @@ namespace API.Controllers.V01
             return Ok(profileDtos);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("CreateProfile")]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
