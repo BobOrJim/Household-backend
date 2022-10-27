@@ -77,17 +77,22 @@ GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetAllCho
 GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetChoreCompletedByHouseholdIdAndByRange/C0000000-0000-0000-0000-000000000003?start=2018-03-20T09%3A12%3A28Z&end=2023-03-20T09%3A12%3A28Z
 
 ###
+// GetChoreCompleted : GET : GetChoreCompletedByHouseholdId
+GET https://localhost:7018/api/V01/ChoreCompleted/GetChoreCompletedById/d4792544-37e3-4725-0d8e-08dab806ce91
+
+###
 // NOT WORKING, WILL FIX LATER
 // ChoreCompleted : POST : AddChoreCompleted
-POST https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/AddChoreCompleted
+POST https://localhost:7018/api/V01/ChoreCompleted/AddChoreCompleted
+Content-Type: application/json
 
 {
-  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "completedAt": "2022-11-26T19:10:06.337Z",
-  "profileIdQol": "B0000000-0000-0000-0000-000000000007",
-  "choreId": "D0000000-0000-0000-0000-000000000007",
-  "householdId": "C0000000-0000-0000-0000-000000000003"
+  "completedAt": "2022-10-27T09:43:04.405Z",
+  "profileIdQol": "B0000000-0000-0000-0000-000000000001",
+  "choreId": "D0000000-0000-0000-0000-000000000004",
+  "householdId": "C0000000-0000-0000-0000-000000000001"
 }
+
 
 ###
 // Household : GET : GetHouseholdByProfileId

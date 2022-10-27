@@ -1,6 +1,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace API.Controllers.V01
 {
@@ -16,18 +17,19 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
-        [Route("GetAllChoreCompletedByHouseholdId/{householdId:Guid}", Name = "GetAllChoreCompletedAsync")]
-        public async Task<IActionResult> GetAllChoreCompletedAsync(Guid householdId)
+        //[Route("GetAllChoreCompletedByHouseholdId/{householdId:Guid}", Name = "GetAllChoreCompletedAsync")]
+        [Route("GetAllChoreCompletedByHouseholdId/{householdId:Guid}")]
+        public async Task<IActionResult> GetAllChoreCompletedByHouseholdId(Guid householdId)
         {
             List<ChoreCompleted>? result = (List<ChoreCompleted>?)await _choreCompletedRepository.GetListAsync(o => o.HouseholdId == householdId);
             if (result == null)
             {
                 return NotFound();
             }
-            List<ChoreCompletedInOutDto> choreCompletedDtos = new();
+            List<ChoreCompletedOutDto> choreCompletedOutDtos = new();
             foreach (ChoreCompleted choreCompleted in result)
             {
-                choreCompletedDtos.Add(new ChoreCompletedInOutDto
+                choreCompletedOutDtos.Add(new ChoreCompletedOutDto
                 {
                     Id = choreCompleted.Id,
                     CompletedAt = choreCompleted.CompletedAt,
@@ -36,7 +38,7 @@ namespace API.Controllers.V01
                     HouseholdId = choreCompleted.HouseholdId ?? Guid.Empty
                 });
             }
-            return Ok(choreCompletedDtos);
+            return Ok(choreCompletedOutDtos);
         }
 
         [HttpGet]
@@ -48,10 +50,10 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            List<ChoreCompletedInOutDto> choreCompletedDtos = new();
+            List<ChoreCompletedOutDto> choreCompletedOutDtos = new();
             foreach (ChoreCompleted choreCompleted in result)
             {
-                choreCompletedDtos.Add(new ChoreCompletedInOutDto
+                choreCompletedOutDtos.Add(new ChoreCompletedOutDto
                 {
                     Id = choreCompleted.Id,
                     CompletedAt = choreCompleted.CompletedAt,
@@ -60,12 +62,35 @@ namespace API.Controllers.V01
                     HouseholdId = choreCompleted.HouseholdId ?? Guid.Empty
                 });
             }
-            return Ok(choreCompletedDtos);
+            return Ok(choreCompletedOutDtos);
         }
+
+
+
+        [HttpGet]
+        [Route("GetChoreCompletedById/{Id:Guid}")]
+        public async Task<IActionResult> GetChoreCompletedById(Guid Id)
+        {
+            ChoreCompleted? choreCompleted = await _choreCompletedRepository.GetByIdAsync(Id);
+            if (choreCompleted == null)
+            {
+                return NotFound();
+            }
+            ChoreCompletedOutDto choreCompletedOutDto = new ChoreCompletedOutDto()
+            {
+                Id = choreCompleted.Id,
+                CompletedAt = choreCompleted.CompletedAt,
+                ProfileIdQol = choreCompleted.ProfileIdQol ?? Guid.Empty,
+                ChoreId = choreCompleted.ChoreId ?? Guid.Empty,
+                HouseholdId = choreCompleted.HouseholdId ?? Guid.Empty,
+            };
+            return Ok(choreCompletedOutDto);
+        }
+
 
         [HttpPost]
         [Route("AddChoreCompleted", Name = "AddChoreCompletedAsync")]
-        public async Task<IActionResult> AddChoreCompletedAsync([FromBody] ChoreCompletedInOutDto choreCompletedDto)
+        public async Task<IActionResult> AddChoreCompletedAsync([FromBody] ChoreCompletedInDto choreCompletedInDto)
         {
             if (!ModelState.IsValid)
             {
@@ -73,16 +98,29 @@ namespace API.Controllers.V01
             }
             try
             {
-                ChoreCompleted result = new ChoreCompleted
+                ChoreCompleted choreCompleted = new ChoreCompleted
                 {
-                    CompletedAt = choreCompletedDto.CompletedAt,
-                    ProfileIdQol = choreCompletedDto.ProfileIdQol,
-                    ChoreId = choreCompletedDto.ChoreId,
-                    HouseholdId = choreCompletedDto.HouseholdId,
+                    CompletedAt = choreCompletedInDto.CompletedAt,
+                    ProfileIdQol = choreCompletedInDto.ProfileIdQol,
+                    ChoreId = choreCompletedInDto.ChoreId,
+                    HouseholdId = choreCompletedInDto.HouseholdId,
                 };
         
-        await _choreCompletedRepository.InsertAsync(result);
-                return Ok();
+                ChoreCompleted? insertedChoreCompleted = await _choreCompletedRepository.InsertAsync(choreCompleted);
+                if (insertedChoreCompleted != null)
+                {
+                    ChoreCompletedOutDto insertedChoreCompletedOutDto = new ChoreCompletedOutDto
+                    {
+                        Id = insertedChoreCompleted.Id,
+                        CompletedAt = insertedChoreCompleted.CompletedAt,
+                        ProfileIdQol = insertedChoreCompleted.ProfileIdQol ?? Guid.Empty,
+                        ChoreId = insertedChoreCompleted.ChoreId ?? Guid.Empty,
+                        HouseholdId = insertedChoreCompleted.HouseholdId ?? Guid.Empty,
+                    };
+                    return CreatedAtAction(nameof(GetChoreCompletedById), new { Id = insertedChoreCompletedOutDto.Id }, insertedChoreCompletedOutDto);
+                }
+
+                return StatusCode(500, "Hi fellow teammate, if you see this something is fuckedup in the BE, and its not your fault. Blame Jimmy");
             }
             catch (Exception e)
             {

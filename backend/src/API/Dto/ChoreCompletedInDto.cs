@@ -1,8 +1,7 @@
 namespace Core.Entities
 {
-    public class ChoreCompletedInOutDto
+    public class ChoreCompletedInDto
     {
-        public Guid Id { get; set; }
         public DateTime CompletedAt { get; set; } = new();
         public Guid ProfileIdQol { get; set; }
         public Guid ChoreId { get; set; }
