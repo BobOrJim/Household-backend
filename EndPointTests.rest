@@ -1,7 +1,6 @@
 https://household-backend.azurewebsites.net
 h_ttps://localhost:7018
 
-
 ###
 // Authenticate : POST : login
 POST https://household-backend.azurewebsites.net/api/V01/Authenticate/login
@@ -12,7 +11,6 @@ content-type: application/json
   "password": "password_A1"
 }
 
-
 ###
 // Authenticate : POST : register
 POST https://household-backend.azurewebsites.net/api/V01/Authenticate/register
@@ -22,7 +20,6 @@ content-type: application/json
   "username": "tuco544",
   "password": "password_A1"
 }
-
 
 ###
 // Chore : GET : GetChoreById
@@ -78,12 +75,11 @@ GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetChoreC
 
 ###
 // GetChoreCompleted : GET : GetChoreCompletedByHouseholdId
-GET https://localhost:7018/api/V01/ChoreCompleted/GetChoreCompletedById/d4792544-37e3-4725-0d8e-08dab806ce91
+GET https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/GetChoreCompletedById/5d8f3259-8136-4dad-7187-08dab80895e9
 
 ###
-// NOT WORKING, WILL FIX LATER
 // ChoreCompleted : POST : AddChoreCompleted
-POST https://localhost:7018/api/V01/ChoreCompleted/AddChoreCompleted
+POST https://household-backend.azurewebsites.net/api/V01/ChoreCompleted/AddChoreCompleted
 Content-Type: application/json
 
 {
@@ -93,14 +89,17 @@ Content-Type: application/json
   "householdId": "C0000000-0000-0000-0000-000000000001"
 }
 
-
 ###
 // Household : GET : GetHouseholdByProfileId
 GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdByProfileId/B0000000-0000-0000-0000-000000000007
 
 ###
 // Household : GET : GetHouseholdById
-GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdById/C0000000-0000-0000-0000-000000000003
+GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdById/c21554ca-2865-40fc-e088-08dab80e7184
+
+###
+// Household : GET : GetHouseholdByHouseholdCode
+GET https://household-backend.azurewebsites.net/api/V01/Household/GetHouseholdByHouseholdCode/666
 
 ###
 // Household : POST : AddHousehold
@@ -108,8 +107,7 @@ POST https://household-backend.azurewebsites.net/api/V01/Household/AddHousehold
 Content-Type: application/json
 
 {
-  "name": "HemmetPåBergetDärBorta",
-  "code": "991105"
+  "name": "Anna och Tuco"
 }
 
 ###
@@ -144,7 +142,6 @@ Content-Type: application/json
   "profileIdQol": "B0000000-0000-0000-0000-000000000007",
   "householdId": "C0000000-0000-0000-0000-000000000003"
 }
-
 
 ###
 // Profile : GET : GetProfileById

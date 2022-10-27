@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Core.Entities;
 using Core.Interfaces;
@@ -11,6 +12,7 @@ namespace API.Controllers.V01
     {
         private readonly IRepository<Household> _householdRepository;
         private readonly IRepository<Profile> _profileRepository;
+        private static Random random = new Random();
 
         public HouseholdController(IRepository<Household> householdRepository, IRepository<Profile> profileRepository)
         {
@@ -29,14 +31,14 @@ namespace API.Controllers.V01
                 Household? householdObject = await _householdRepository.GetByIdAsync(profileObject.HouseholdId);
                 if (householdObject == null) return NotFound("Profile found, but no household by ID is tied to it(this should be impossible :o)");
 
-                HouseholdOutDto householdDto = new HouseholdOutDto
+                HouseholdOutDto householdOutDto = new HouseholdOutDto
                 {
                     Id = householdObject.Id,
                     Code = householdObject.Code,
                     Name = householdObject.Name,
                 };
 
-                return Ok(householdDto);
+                return Ok(householdOutDto);
             }
             catch (Exception e)
             {
@@ -54,19 +56,46 @@ namespace API.Controllers.V01
             {
                 return NotFound("ID could not be found");
             }
-            HouseholdOutDto householdDto = new HouseholdOutDto
+            HouseholdOutDto householdOutDto = new HouseholdOutDto
             {
                 Id = household.Id,
                 Code = household.Code,
                 Name = household.Name,
             };
 
-            return Ok(householdDto);
+            return Ok(householdOutDto);
+        }
+
+        [HttpGet]
+        [Route("GetHouseholdByHouseholdCode/{code}", Name = "GetHouseholdByHouseholdCodeAsync")]
+        public async Task<IActionResult> GetHouseholdByHouseholdCodeAsync(string code)
+        {
+            try
+            {
+                Household? household = (await _householdRepository.GetListAsync(x => x.Code == code)).FirstOrDefault();
+                if (household == null)
+                {
+                    return NotFound("Code could not be found");
+                }
+
+                HouseholdOutDto householdOutDto = new HouseholdOutDto
+                {
+                    Id = household.Id,
+                    Code = household.Code,
+                    Name = household.Name
+                };
+
+                return Ok(householdOutDto);
+            }
+            catch (Exception e)
+            {
+                return NotFound("Something went wrong\n\n" + e.InnerException);
+            }
         }
 
         [HttpPost]
         [Route("AddHousehold", Name = "AddHouseholdAsync")]
-        public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdOutDto HouseholdDto)
+        public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdInDto HouseholdInDto)
         {
             if (!ModelState.IsValid)
             {
@@ -76,17 +105,29 @@ namespace API.Controllers.V01
             {
                 Household household = new Household
                 {
-                    Name = HouseholdDto.Name,
-                    Code = HouseholdDto.Code,
+                    Name = HouseholdInDto.Name,
+                    Code = getRandomHouseholdCode(5),
                 };
 
-                await _householdRepository.InsertAsync(household);
-                return Ok(household);
+                Household insertedHousehold = await _householdRepository.InsertAsync(household);
+
+                if (insertedHousehold != null)
+                {
+                    HouseholdOutDto insertedHouseholdOutDto = new HouseholdOutDto
+                    {
+                        Id = insertedHousehold.Id,
+                        Name = insertedHousehold.Name,
+                        Code = insertedHousehold.Code
+                    };
+                    return CreatedAtAction(nameof(GetHouseholdById), new { Id = insertedHouseholdOutDto.Id }, insertedHouseholdOutDto);
+                }
             }
+
             catch (Exception e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, e.Message + "\n\n" + e.InnerException);
             }
+            return StatusCode(500, "Hi fellow teammate, if you see this something is fuckedup in the BE, and its not your fault. Blame Jimmy");
         }
 
         [HttpDelete]
@@ -105,5 +146,12 @@ namespace API.Controllers.V01
                 return StatusCode(400, e.Message);
             }
         }
+
+        private string getRandomHouseholdCode(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        
     }
 }
