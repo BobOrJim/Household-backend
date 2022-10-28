@@ -166,7 +166,7 @@ namespace API.Controllers.V01
                 return BadRequest();
             }
 
-            return Ok();
+            return NoContent();
         }
     }
 }
