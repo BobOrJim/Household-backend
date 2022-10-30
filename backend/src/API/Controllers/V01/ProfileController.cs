@@ -93,30 +93,47 @@ namespace API.Controllers.V01
         [Route("CreateProfile")]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
         {
-
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var authUserId = identity?.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous")?.Value; // detta är inte det snyggaste lol
             if (authUserId == null)
             {
                 return Unauthorized();
             }
-
-            var insertedUser = await _profileRepository.InsertAsync(new Profile()
+            try
             {
-                Alias = profileCreateDto.Alias,
-                Avatar = "pending",
-                IsAdmin = profileCreateDto.IsAdmin,
-                PendingRequest = profileCreateDto.IsAdmin ? false : true,
-                HouseholdId = profileCreateDto.HouseholdId ?? new Guid(),
-                AuthUserId = new Guid(authUserId),
-            });
+                Profile profile = new Profile
+                {
+                    Id = Guid.NewGuid(),
+                    Alias = profileCreateDto.Alias,
+                    Avatar = "pending",
+                    IsAdmin = profileCreateDto.IsAdmin,
+                    PendingRequest = profileCreateDto.IsAdmin ? false : true,
+                    HouseholdId = profileCreateDto.HouseholdId ?? new Guid(),
+                    AuthUserId = new Guid(authUserId),
+                };
+                Profile insertedUser = await _profileRepository.InsertAsync(profile);
 
-            if (insertedUser == null)
-            {
-                return BadRequest();
+                ProfileOutDto profileOutDto = new ProfileOutDto
+                {
+                    Id = insertedUser.Id,
+                    Alias = insertedUser.Alias,
+                    Avatar = insertedUser.Avatar,
+                    IsAdmin = insertedUser.IsAdmin,
+                    PendingRequest = insertedUser.PendingRequest,
+                    HouseholdId = insertedUser.HouseholdId,
+                    AuthUserId = insertedUser.AuthUserId
+                };
+                return CreatedAtAction(nameof(GetByProfileId), new { id = insertedUser.Id }, profileOutDto);
             }
-
-            return CreatedAtAction(nameof(GetByProfileId), new { id = insertedUser.Id }, insertedUser);
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpPatch]
