@@ -31,7 +31,7 @@ GET https://household-backend.azurewebsites.net/api/V01/Chore/GetChoresByHouseho
 
 ###
 // Chore : POST : AddChore
-POST https://localhost:7018/api/V01/Chore/AddChore
+POST https://household-backend.azurewebsites.net/api/V01/Chore/AddChore
 Content-Type: application/json
 
 {
@@ -116,20 +116,20 @@ DELETE https://household-backend.azurewebsites.net/api/V01/Household/DeleteHouse
 
 ###
 // Pause : GET : GetPauseById
-GET https://localhost:7018/api/V01/Pause/GetPauseById/A0000000-0000-0000-0000-000000000003
+GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseById/A0000000-0000-0000-0000-000000000003
 
 
 ###
 // Pause : GET : GetPauseByHouseholdId
-GET https://localhost:7018/api/V01/Pause/GetPauseByHouseholdId/C0000000-0000-0000-0000-000000000003
+GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseByHouseholdId/C0000000-0000-0000-0000-000000000003
 
 ###
 // Pause : POST : AddPause
-POST https://localhost:7018/api/V01/Pause/AddPause
+POST https://household-backend.azurewebsites.net/api/V01/Pause/AddPause
 Content-Type: application/json
 
 {
-  "startDate": "2022-10-17T10:52:41.517Z",
+  "startDate": "2022-10-17T10:52:44.517Z",
   "endDate": "2022-11-17T10:52:41.517Z",
   "profileIdQol": "B0000000-0000-0000-0000-000000000007",
   "householdId": "C0000000-0000-0000-0000-000000000003"
@@ -137,14 +137,14 @@ Content-Type: application/json
 
 ###
 // Pause : PUT : UpdatePause
-PUT https://localhost:7018/api/V01/Pause/UpdatePause/966B87DE-65B2-42DF-DB09-08DABA659E4F
+PUT https://household-backend.azurewebsites.net/api/V01/Pause/UpdatePause/966B87DE-65B2-42DF-DB09-08DABA659E4F
 Content-Type: application/json
 
 {
-  "startDate": "2022-10-17T10:52:41.517Z",
+  "startDate": "2022-11-17T10:52:41.517Z",
   "endDate": "2022-12-17T10:52:41.517Z",
   "profileIdQol": "B0000000-0000-0000-0000-000000000007",
-  "householdId": "C0000000-0000-0000-0000-000000000023"
+  "householdId": "C0000000-0000-0000-0000-000000000003"
 }
 
 ###
@@ -166,7 +166,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hbm9ueW1vdXMiOiI2ZmZhZTI4Ni1iNjRhLTRlNWEtYWFiZC04OTAzOTRmOWE5M2MiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidHVjbzU0IiwianRpIjoiZDcyNTVjNzYtMmM3Yy00NzEzLWI2MTMtZGYxNjFkYWM1OWZjIiwiZXhwIjoxNjY3NjU0NzA0LCJpc3MiOiJUcnVlIiwiYXVkIjoiVHJ1ZSJ9.a6uDTPZtQZlKLwKQHMQDune9wX11FkbqIijxTaD_5VM
 
 {
-  "alias": "Robotnik!",
+  "alias": "Robotnik3!",
   "householdId": "C0000000-0000-0000-0000-000000000001",
   "isAdmin": false
 }
