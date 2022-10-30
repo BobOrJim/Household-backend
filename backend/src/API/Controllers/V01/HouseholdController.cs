@@ -131,32 +131,29 @@ namespace API.Controllers.V01
         }
 
         [HttpPatch]
-        [Route("UpdateHousehold/{id:Guid}", Name = "UpdateHouseholdAsync")]
-        public async Task<IActionResult> UpdateHouseholdAsync([FromBody] HouseholdInDto householdInDto, Guid id)
+        [Route("EditHousehold/{id:Guid}")]
+        public async Task<IActionResult> UpdateHousehold(Guid id, [FromBody] HouseholdInDto householdEditDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                Household? household = await _householdRepository.GetByIdAsync(id);
+            var existingHousehold = await _householdRepository.GetByIdAsync(id);
 
-                household.Name = householdInDto.Name;
-
-                var updatedHousehold = await _householdRepository.UpdateAsync(household);
-                return Ok(new HouseholdOutDto()
-                {
-                    Id = updatedHousehold.Id,
-                    Name = updatedHousehold.Name,
-                    Code = updatedHousehold.Code,
-
-                });
-            }
-            catch (Exception e)
+            if (existingHousehold == null)
             {
-                return StatusCode(400, e.Message);
+                return BadRequest("Household does not exist");
             }
+
+            var updatedHousehold = await _householdRepository.UpdateAsync(new Household()
+            {
+                Id = existingHousehold.Id,
+                Name = householdEditDto.Name ?? existingHousehold.Name,
+                Code = existingHousehold.Code,
+            });
+
+            if (updatedHousehold == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(updatedHousehold);
         }
 
         [HttpDelete]
