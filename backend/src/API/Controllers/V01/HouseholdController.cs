@@ -130,6 +130,32 @@ namespace API.Controllers.V01
             return StatusCode(500, "Hi fellow teammate, if you see this something is fuckedup in the BE, and its not your fault. Blame Jimmy");
         }
 
+        [HttpPatch]
+        [Route("EditHousehold/{id:Guid}")]
+        public async Task<IActionResult> UpdateHousehold(Guid id, [FromBody] HouseholdInDto householdEditDto)
+        {
+            var existingHousehold = await _householdRepository.GetByIdAsync(id);
+
+            if (existingHousehold == null)
+            {
+                return BadRequest("Household does not exist");
+            }
+
+            var updatedHousehold = await _householdRepository.UpdateAsync(new Household()
+            {
+                Id = existingHousehold.Id,
+                Name = householdEditDto.Name ?? existingHousehold.Name,
+                Code = existingHousehold.Code,
+            });
+
+            if (updatedHousehold == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(updatedHousehold);
+        }
+
         [HttpDelete]
         [Route("DeleteHouseholdById/{id:Guid}", Name = "DeleteHouseholdByIdAsync")]
         public async Task<IActionResult> DeleteHouseholdByIdAsync(Guid id)

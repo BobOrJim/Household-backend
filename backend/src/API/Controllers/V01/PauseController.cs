@@ -17,6 +17,28 @@ namespace API.Controllers.V01
         }
 
         [HttpGet]
+        [Route("GetPauseById/{id:Guid}", Name = "GetPauseByIdAsync")]
+        public async Task<IActionResult> GetPauseByIdAsync(Guid id)
+        {
+            Pause? pauseObject = await _pauseRepository.GetByIdAsync(id);
+            if (pauseObject == null)
+            {
+                return NotFound();
+            }
+            PauseOutDto pauseDto = new PauseOutDto
+            {
+                Id = pauseObject.Id,
+                StartDate = pauseObject.StartDate,
+                EndDate = pauseObject.EndDate,
+                ProfileIdQol = pauseObject.ProfileIdQol,
+                HouseholdId = pauseObject.HouseholdId
+            };
+            return Ok(pauseDto);
+        }
+
+
+        
+        [HttpGet]
         [Route("GetPauseByHouseholdId/{id:Guid}", Name = "GetPauseByHouseholdIdAsync")]
         public async Task<IActionResult> GetPauseByHouseholdIdAsync(Guid id)
         {
@@ -25,7 +47,7 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            IEnumerable<PauseOutDto> pauseDtoList = pauseObjects.Select(pause => new PauseOutDto
+            IEnumerable<PauseOutDto> pauseOutDtoList = pauseObjects.Select(pause => new PauseOutDto
             {
                 Id = pause.Id,
                 StartDate = pause.StartDate,
@@ -34,12 +56,12 @@ namespace API.Controllers.V01
                 HouseholdId = pause.HouseholdId
             });
 
-            return Ok(pauseDtoList);
+            return Ok(pauseOutDtoList);
         }
 
         [HttpPost]
         [Route("AddPause", Name = "AddPauseAsync")]
-        public async Task<IActionResult> AddPauseAsync([FromBody] PauseOutDto pauseDto)
+        public async Task<IActionResult> AddPauseAsync([FromBody] PauseInDto pauseInDto)
         {
             if (!ModelState.IsValid)
             {
@@ -47,16 +69,24 @@ namespace API.Controllers.V01
             }
             try
             {
-                Pause result = new Pause
+                Pause pause = new Pause
                 {
-                    StartDate = pauseDto.StartDate,
-                    EndDate = pauseDto.EndDate,
-                    ProfileIdQol = pauseDto.ProfileIdQol,
-                    HouseholdId = pauseDto.HouseholdId,
+                    StartDate = pauseInDto.StartDate,
+                    EndDate = pauseInDto.EndDate,
+                    ProfileIdQol = pauseInDto.ProfileIdQol,
+                    HouseholdId = pauseInDto.HouseholdId,
                 };
 
-                await _pauseRepository.InsertAsync(result);
-                return Ok();
+                var insertedPause = await _pauseRepository.InsertAsync(pause);
+                PauseOutDto pauseOutDto = new PauseOutDto
+                {
+                    Id = insertedPause.Id,
+                    StartDate = insertedPause.StartDate,
+                    EndDate = insertedPause.EndDate,
+                    ProfileIdQol = insertedPause.ProfileIdQol,
+                    HouseholdId = insertedPause.HouseholdId
+                };
+                return CreatedAtRoute("GetPauseByIdAsync", new { id = pauseOutDto.Id }, pauseOutDto);
             }
             catch (Exception e)
             {
@@ -66,7 +96,7 @@ namespace API.Controllers.V01
 
         [HttpPut]
         [Route("UpdatePause/{id:Guid}", Name = "UpdatePauseAsync")]
-        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseOutDto pauseDto, Guid id)
+        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseInDto pauseInDto, Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -79,10 +109,10 @@ namespace API.Controllers.V01
                 {
                     return NotFound();
                 }
-                pause.StartDate = pauseDto.StartDate;
-                pause.EndDate = pauseDto.EndDate;
-                pause.ProfileIdQol = pauseDto.ProfileIdQol;
-                pause.HouseholdId = pauseDto.HouseholdId;
+                pause.StartDate = pauseInDto.StartDate;
+                pause.EndDate = pauseInDto.EndDate;
+                pause.ProfileIdQol = pauseInDto.ProfileIdQol;
+                pause.HouseholdId = pauseInDto.HouseholdId;
 
                 await _pauseRepository.UpdateAsync(pause);
                 return Ok();

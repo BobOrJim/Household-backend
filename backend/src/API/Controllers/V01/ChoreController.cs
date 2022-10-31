@@ -24,7 +24,7 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            ChoreInOutDto choreDto = new ChoreInOutDto
+            ChoreOutDto choreDto = new ChoreOutDto
             {
                 Id = choreObject.Id,
                 Name = choreObject.Name,
@@ -48,10 +48,10 @@ namespace API.Controllers.V01
             {
                 return NotFound();
             }
-            List<ChoreInOutDto> choreDtoList = new List<ChoreInOutDto>();
+            List<ChoreOutDto> choreDtoList = new List<ChoreOutDto>();
             foreach (Chore choreObject in choreList)
             {
-                ChoreInOutDto choreDto = new ChoreInOutDto
+                ChoreOutDto choreDto = new ChoreOutDto
                 {
                     Id = choreObject.Id,
                     Name = choreObject.Name,
@@ -70,7 +70,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("AddChore", Name = "AddChoreAsync")]
-        public async Task<IActionResult> AddChoreAsync([FromBody] ChoreInOutDto choreDto)
+        public async Task<IActionResult> AddChoreAsync([FromBody] ChoreInDto choreInDto)
         {
             if (!ModelState.IsValid)
             {
@@ -78,22 +78,23 @@ namespace API.Controllers.V01
             }
             try
             {
-                Chore result = new Chore
+                Chore chore = new Chore
                 {
-                    Name = choreDto.Name,
-                    Points = choreDto.Points,
-                    Description = choreDto.Description,
-                    PictureUrl = choreDto.PictureUrl,
-                    AudioUrl = choreDto.AudioUrl,
-                    Frequency = choreDto.Frequency,
-                    IsArchived = choreDto.IsArchived,
-                    HouseholdId = choreDto.HouseholdId,
+                    Name = choreInDto.Name,
+                    Points = choreInDto.Points,
+                    Description = choreInDto.Description,
+                    PictureUrl = choreInDto.PictureUrl,
+                    AudioUrl = choreInDto.AudioUrl,
+                    Frequency = choreInDto.Frequency,
+                    IsArchived = choreInDto.IsArchived,
+                    HouseholdId = choreInDto.HouseholdId,
                 };
 
-                var insertedChore = await _choreRepository.InsertAsync(result);
+                var insertedChore = await _choreRepository.InsertAsync(chore);
 
-                return CreatedAtAction("GetChoreById", new { id = insertedChore.Id }, new ChoreInOutDto()
+                return CreatedAtAction("GetChoreById", new { id = insertedChore.Id }, new ChoreOutDto()
                 {
+                    Id = insertedChore.Id,
                     Name = insertedChore.Name,
                     Points = insertedChore.Points,
                     Description = insertedChore.Description,
@@ -112,7 +113,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("UpdateChore/{id:Guid}", Name = "UpdateChoreAsync")]
-        public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreInOutDto choreDto, Guid id)
+        public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreInDto choreInDto, Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -122,18 +123,17 @@ namespace API.Controllers.V01
             {
                 Chore? chore = await _choreRepository.GetByIdAsync(id);
 
-                chore.Name = choreDto.Name;
-                chore.Points = choreDto.Points;
-                chore.Description = choreDto.Description;
-                chore.PictureUrl = choreDto.PictureUrl;
-                chore.AudioUrl = choreDto.AudioUrl;
-                chore.Frequency = choreDto.Frequency;
-                chore.IsArchived = choreDto.IsArchived;
-                chore.HouseholdId = choreDto.HouseholdId;
-
+                chore.Name = choreInDto.Name;
+                chore.Points = choreInDto.Points;
+                chore.Description = choreInDto.Description;
+                chore.PictureUrl = choreInDto.PictureUrl;
+                chore.AudioUrl = choreInDto.AudioUrl;
+                chore.Frequency = choreInDto.Frequency;
+                chore.IsArchived = choreInDto.IsArchived;
+                chore.HouseholdId = choreInDto.HouseholdId;
 
                 var updatedChore = await _choreRepository.UpdateAsync(chore);
-                return Ok(new ChoreInOutDto()
+                return Ok(new ChoreOutDto()
                 {
                     Id = updatedChore.Id,
                     Name = updatedChore.Name,

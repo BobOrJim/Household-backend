@@ -92,22 +92,39 @@ namespace API.Controllers.V01
         [Route("CreateProfile")]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
         {
-            var insertedUser = await _profileRepository.InsertAsync(new Profile()
+            if (!ModelState.IsValid)
             {
-                Alias = profileCreateDto.Alias,
-                Avatar = "pending",
-                IsAdmin = profileCreateDto.IsAdmin,
-                PendingRequest = profileCreateDto.IsAdmin,
-                HouseholdId = profileCreateDto.HouseholdId,
-                AuthUserId = profileCreateDto.AuthUserId,
-            });
-
-            if (insertedUser == null)
-            {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
+            
+            try
+            {
+                var insertedUser = await _profileRepository.InsertAsync(new Profile()
+                {
+                    Alias = profileCreateDto.Alias,
+                    Avatar = "pending",
+                    IsAdmin = profileCreateDto.IsAdmin,
+                    PendingRequest = profileCreateDto.IsAdmin,
+                    HouseholdId = profileCreateDto.HouseholdId,
+                    AuthUserId = profileCreateDto.AuthUserId,
+                });
 
-            return CreatedAtAction(nameof(GetByProfileId), new { id = insertedUser.Id }, insertedUser);
+                ProfileOutDto profileOutDto = new ProfileOutDto
+                {
+                    Id = insertedUser.Id,
+                    Alias = insertedUser.Alias,
+                    Avatar = insertedUser.Avatar,
+                    IsAdmin = insertedUser.IsAdmin,
+                    PendingRequest = insertedUser.PendingRequest,
+                    HouseholdId = insertedUser.HouseholdId,
+                    AuthUserId = insertedUser.AuthUserId
+                };
+                return CreatedAtAction(nameof(GetByProfileId), new { id = insertedUser.Id }, profileOutDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         [HttpPatch]
