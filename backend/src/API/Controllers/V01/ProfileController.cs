@@ -104,7 +104,7 @@ namespace API.Controllers.V01
                     Alias = profileCreateDto.Alias,
                     Avatar = "pending",
                     IsAdmin = profileCreateDto.IsAdmin,
-                    PendingRequest = profileCreateDto.IsAdmin ? false : true,
+                    PendingRequest = !profileCreateDto.IsAdmin,
                     HouseholdId = profileCreateDto.HouseholdId,
                     AuthUserId = profileCreateDto.AuthUserId,
                 });
