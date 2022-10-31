@@ -88,27 +88,18 @@ namespace API.Controllers.V01
             return Ok(profileDtos);
         }
 
-        [Authorize]
         [HttpPost]
         [Route("CreateProfile")]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
         {
-
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var authUserId = identity?.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous")?.Value; // detta är inte det snyggaste lol
-            if (authUserId == null)
-            {
-                return Unauthorized();
-            }
-
             var insertedUser = await _profileRepository.InsertAsync(new Profile()
             {
                 Alias = profileCreateDto.Alias,
                 Avatar = "pending",
                 IsAdmin = profileCreateDto.IsAdmin,
-                PendingRequest = profileCreateDto.IsAdmin ? false : true,
-                HouseholdId = profileCreateDto.HouseholdId ?? new Guid(),
-                AuthUserId = new Guid(authUserId),
+                PendingRequest = profileCreateDto.IsAdmin,
+                HouseholdId = profileCreateDto.HouseholdId,
+                AuthUserId = profileCreateDto.AuthUserId,
             });
 
             if (insertedUser == null)

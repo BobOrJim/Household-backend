@@ -6,8 +6,9 @@ namespace Core.Entities
     {
         [MaxLength(20)]
         public string Alias { get; set; } = "";
-        public Guid? HouseholdId { get; set; }
+        public Guid HouseholdId { get; set; }
         public bool IsAdmin { get; set; }
+        public Guid AuthUserId { get; set; }
     }
 }
 
