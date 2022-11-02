@@ -125,23 +125,23 @@ GET https://household-backend.azurewebsites.net/api/V01/Pause/GetPauseByHousehol
 
 ###
 // Pause : POST : AddPause
-POST https://household-backend.azurewebsites.net/api/V01/Pause/AddPause
+POST https://localhost:7018/api/V01/Pause/AddPause
 Content-Type: application/json
 
 {
   "startDate": "2022-10-17T10:52:44.517Z",
-  "endDate": "2022-11-17T10:52:41.517Z",
+  "endDate": "2022-11-27T10:52:41.517Z",
   "profileIdQol": "B0000000-0000-0000-0000-000000000007",
   "householdId": "C0000000-0000-0000-0000-000000000003"
 }
 
 ###
 // Pause : PUT : UpdatePause
-PUT https://household-backend.azurewebsites.net/api/V01/Pause/UpdatePause/966B87DE-65B2-42DF-DB09-08DABA659E4F
+PUT https://localhost:7018/api/V01/Pause/UpdatePause/7E1A13BE-445A-46C7-9CC9-08DABCCDE132
 Content-Type: application/json
 
 {
-  "endDate": "2022-12-17T10:52:41.517Z",
+  "endDate": "2022-12-19T10:52:41.517Z",
   "householdId": "C0000000-0000-0000-0000-000000000003"
 }
 

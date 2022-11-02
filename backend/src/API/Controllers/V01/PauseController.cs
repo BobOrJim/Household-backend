@@ -130,8 +130,17 @@ namespace API.Controllers.V01
 
                 pause.HouseholdId = pauseUpdateInDto.HouseholdId;
 
-                await _pauseRepository.UpdateAsync(pause);
-                return Ok();
+                var updatedPause = await _pauseRepository.UpdateAsync(pause);
+                PauseOutDto pauseOutDto = new PauseOutDto
+                {
+                    Id = updatedPause.Id,
+                    StartDate = updatedPause.StartDate,
+                    EndDate = updatedPause.EndDate,
+                    ProfileIdQol = updatedPause.ProfileIdQol,
+                    HouseholdId = updatedPause.HouseholdId
+                };
+
+                return CreatedAtRoute("GetPauseByIdAsync", new { id = pauseOutDto.Id }, pauseOutDto);
             }
             catch (Exception e)
             {
