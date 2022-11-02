@@ -96,7 +96,7 @@ namespace API.Controllers.V01
 
         [HttpPut]
         [Route("UpdatePause/{id:Guid}", Name = "UpdatePauseAsync")]
-        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseInDto pauseInDto, Guid id)
+        public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseUpdateInDto pauseUpdateInDto, Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -109,10 +109,26 @@ namespace API.Controllers.V01
                 {
                     return NotFound();
                 }
-                pause.StartDate = pauseInDto.StartDate;
-                pause.EndDate = pauseInDto.EndDate;
-                pause.ProfileIdQol = pauseInDto.ProfileIdQol;
-                pause.HouseholdId = pauseInDto.HouseholdId;
+
+                if (pauseUpdateInDto.StartDate != DateTime.MinValue && pauseUpdateInDto.StartDate != null)
+                {
+                    //Debug.WriteLine("Vi skriver till pause.StartDate" + pauseUpdateInDto.StartDate);
+                    pause.StartDate = (DateTime)pauseUpdateInDto.StartDate;
+                }
+
+                if (pauseUpdateInDto.EndDate != null)
+                {
+                    //Debug.WriteLine("Vi skriver till pause.EndDate" + pauseUpdateInDto.EndDate);
+                    pause.EndDate = (DateTime)pauseUpdateInDto.EndDate;
+                }
+                
+                if (pauseUpdateInDto.ProfileIdQol != null)
+                {
+                    //Debug.WriteLine("Vi skriver till pause.ProfileIdQol" + pauseUpdateInDto.ProfileIdQol);
+                    pause.ProfileIdQol = (Guid)pauseUpdateInDto.ProfileIdQol;
+                }
+
+                pause.HouseholdId = pauseUpdateInDto.HouseholdId;
 
                 await _pauseRepository.UpdateAsync(pause);
                 return Ok();
