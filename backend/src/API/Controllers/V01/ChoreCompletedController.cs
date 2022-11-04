@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -90,6 +91,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("AddChoreCompleted", Name = "AddChoreCompletedAsync")]
+        [Authorize]
         public async Task<IActionResult> AddChoreCompletedAsync([FromBody] ChoreCompletedInDto choreCompletedInDto)
         {
             if (!ModelState.IsValid)

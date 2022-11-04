@@ -90,6 +90,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("CreateProfile")]
+        [Authorize]
         public async Task<IActionResult> AddProfile([FromBody] ProfileCreateInDto profileCreateDto)
         {
             if (!ModelState.IsValid)
@@ -129,6 +130,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("EditProfile/{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> UpdateProfile(Guid id, [FromBody] ProfileUpdateInDto profileEditDto)
         {
             var existingProfile = await _profileRepository.GetByIdAsync(id);
@@ -159,6 +161,7 @@ namespace API.Controllers.V01
 
         [HttpDelete]
         [Route("DeleteProfile/{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> DeleteProfile(Guid id)
         {
             var profileToDelete = await _profileRepository.GetByIdAsync(id);

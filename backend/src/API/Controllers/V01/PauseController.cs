@@ -98,6 +98,7 @@ namespace API.Controllers.V01
 
         [HttpPut]
         [Route("UpdatePause/{id:Guid}", Name = "UpdatePauseAsync")]
+        [Authorize]
         public async Task<IActionResult> UpdatePauseAsync([FromBody] PauseUpdateInDto pauseUpdateInDto, Guid id)
         {
             if (!ModelState.IsValid)

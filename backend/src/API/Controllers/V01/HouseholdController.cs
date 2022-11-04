@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -95,6 +96,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("AddHousehold", Name = "AddHouseholdAsync")]
+        [Authorize]
         public async Task<IActionResult> AddHouseholdAsync([FromBody] HouseholdInDto HouseholdInDto)
         {
             if (!ModelState.IsValid)
@@ -132,6 +134,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("EditHousehold/{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> UpdateHousehold(Guid id, [FromBody] HouseholdInDto householdEditDto)
         {
             var existingHousehold = await _householdRepository.GetByIdAsync(id);
@@ -158,6 +161,7 @@ namespace API.Controllers.V01
 
         [HttpDelete]
         [Route("DeleteHouseholdById/{id:Guid}", Name = "DeleteHouseholdByIdAsync")]
+        [Authorize]
         public async Task<IActionResult> DeleteHouseholdByIdAsync(Guid id)
         {
             try

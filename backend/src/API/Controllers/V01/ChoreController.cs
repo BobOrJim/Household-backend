@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -70,6 +71,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("AddChore", Name = "AddChoreAsync")]
+        [Authorize]
         public async Task<IActionResult> AddChoreAsync([FromBody] ChoreInDto choreInDto)
         {
             if (!ModelState.IsValid)
@@ -113,6 +115,7 @@ namespace API.Controllers.V01
 
         [HttpPatch]
         [Route("UpdateChore/{id:Guid}", Name = "UpdateChoreAsync")]
+        [Authorize]
         public async Task<IActionResult> UpdateChoreAsync([FromBody] ChoreInDto choreInDto, Guid id)
         {
             if (!ModelState.IsValid)
@@ -154,6 +157,7 @@ namespace API.Controllers.V01
 
         [HttpDelete]
         [Route("DeleteChore/{id:Guid}")]
+        [Authorize]
         public async Task<IActionResult> DeleteChore(Guid id)
         {
             var choreToDelete = await _choreRepository.GetByIdAsync(id);
