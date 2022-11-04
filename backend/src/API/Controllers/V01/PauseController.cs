@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V01
@@ -61,6 +62,7 @@ namespace API.Controllers.V01
 
         [HttpPost]
         [Route("AddPause", Name = "AddPauseAsync")]
+        [Authorize]
         public async Task<IActionResult> AddPauseAsync([FromBody] PauseInDto pauseInDto)
         {
             if (!ModelState.IsValid)
