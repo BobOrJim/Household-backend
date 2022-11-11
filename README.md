@@ -1,4 +1,4 @@
 # Introduction 
-Detta är backend, till denna applikation.
+Frontend hittas här
 
-https://github.com/Banjo1337/Household
+https://github.com/BobOrJim/Household-frontend
